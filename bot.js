@@ -1,4 +1,4 @@
-function bot() {
+function func() {
     const config = require('./config.json');
 
     const Files = require('fs');
@@ -34,7 +34,7 @@ function bot() {
         files.forEach((file, index) => {
             console.log(file);
             if (file.endsWith('.command.js')) {
-                commands.push(require('./commands/' + file)(this, config));
+                commands.push(require('./commands/' + file)(func, config));
             }
         });
     });
@@ -69,4 +69,4 @@ function bot() {
     bot.login(config.token);
 }
 
-bot();
+func();
