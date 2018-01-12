@@ -24,7 +24,7 @@ setInterval(getPrices, 5000);
 function getPrice(currency, base) {
     if (base === 'USD') {
         let btcPerUsd = prices.BTCUSDT;
-        let price = prices[currency + base];
+        let price = prices[currency + 'BTC'];
         return prices[currency + base] * btcPerUsd;
     } else {
         return prices[currency + base];
