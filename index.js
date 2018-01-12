@@ -11,6 +11,25 @@ BinanceAPI.options(config.binance);
 config.token.APIKEY = config.token.api_key;
 config.token.APISECRET = config.token.api_secret;
 
+var prices = {};
+getPrices();
+
+function getPrices() {
+    BinanceAPI.prices(ticker => {
+        prices = ticker;
+    });
+}
+setInterval(getPrices(), 5000);
+
+function getPrice(currency, base) {
+    if (base === 'USD') {
+        let btcPerUsd = prices.BTCUSDT;
+        return prices[currency + base] * btcPerUsd;
+    } else {
+        return prices[currency + base];
+    }
+}
+
 bot.on('ready', () => {
     bot.user.setPresence({
         status: 'online',
@@ -45,18 +64,17 @@ bot.on('message', event => {
                     let currency = args[0].toUpperCase();
                     let defaultBase = (args[1] || config.default_base).toUpperCase() || "BTC";
 
-                    BinanceAPI.prices(ticker => {
-                        let price = ticker[currency + defaultBase.toUpperCase()];
-                        let embed = new RichEmbed()
-                            .setColor(config.colors.main)
-                            .addField(currency + '/' + defaultBase.toUpperCase(), price, true);
-                        (config.other_base_displays || []).forEach(base => {
-                            if (base.toUpperCase() !== defaultBase) {
-                                embed.addField(currency.toUpperCase() + '/' + base.toUpperCase(), ticker[currency + base.toUpperCase()], true);
-                            }
-                        });
-                        event.channel.send({embed});
+                    let embed = new RichEmbed()
+                        .setColor(config.colors.main)
+                        .addField(currency + '/' + defaultBase.toUpperCase(), getPrice(currency, defaultBase), true);
+                    (config.other_base_displays || []).forEach(base => {
+                        base = base.toUpperCase();
+                        if (base !== defaultBase) {
+                            embed.addField(currency.toUpperCase() + '/' + base, getPrice(currency, base), true);
+                        }
                     });
+                    embed.setAuthor('Requested by ' + member.nickname, event.author.avatarURL);
+                    event.channel.send({embed});
                     break;
             }
         }).catch(console.error);
