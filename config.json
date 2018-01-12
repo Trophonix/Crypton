@@ -2,7 +2,7 @@
     "prefix": "$",
     "token": "xxx",
     "colors": {
-        "main": [255, 204, 0],
+        "main": [0, 204, 0],
         "error": [255, 0, 0]
     },
     "binance": {
