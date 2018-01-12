@@ -29,6 +29,7 @@ function getPrice(currency, base, decimals) {
     } else {
         price = prices[currency + base];
     }
+    console.log(typeof price);
     return price.toFixed(decimals);
 }
 
