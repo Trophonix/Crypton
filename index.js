@@ -58,7 +58,8 @@ bot.on('message', event => {
                             .setDescription('Incorrect usage!')
                             .addField('Syntax', `${config.prefix}price (currency) (base [BTC])`)
                             .addField('Example', `${config.prefix}price xrp eth`)
-                            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL);
+                            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                            .setTimestamp();
                         event.channel.send({embed});
                         return;
                     }
@@ -75,7 +76,8 @@ bot.on('message', event => {
                             embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals).toString(), true);
                         }
                     });
-                    embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL);
+                    embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                        .setTimestamp();
                     event.channel.send({embed});
                     break;
             }
