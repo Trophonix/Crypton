@@ -80,6 +80,7 @@ bot.on('message', event => {
                     });
 
                     BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
+                        console.log(ticks);
                         let tick = ticks[ticks.length - 1];
                         if (tick) {
                             embed.addField('24hr High', tick.high)
