@@ -72,7 +72,7 @@ bot.on('message', event => {
                     Object.keys(config.other_base_displays || {}).forEach(base => {
                         baseUpper = base.toUpperCase();
                         if (baseUpper !== defaultBase) {
-                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base]).toString(), true);
+                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals).toString(), true);
                         }
                     });
                     embed.setAuthor('Requested by ' + member.nickname, event.author.avatarURL);
