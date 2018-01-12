@@ -17,7 +17,6 @@ getPrices();
 function getPrices() {
     BinanceAPI.prices(ticker => {
         prices = ticker;
-        console.log(ticker);
     });
 }
 setInterval(getPrices, 5000);
@@ -25,6 +24,7 @@ setInterval(getPrices, 5000);
 function getPrice(currency, base) {
     if (base === 'USD') {
         let btcPerUsd = prices.BTCUSDT;
+        console.log('btc/usd: ' + btcPerUsd);
         return prices[currency + base] * btcPerUsd;
     } else {
         return prices[currency + base];
