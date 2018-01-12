@@ -69,9 +69,20 @@ bot.on('message', event => {
                     let currency = args[0].toUpperCase();
                     let defaultBase = (args[1] || config.default_base).toUpperCase() || "BTC";
 
+                    let price = getPrice(currency, defaultBase, config.default_Decimals);
+                    if (price == null) {
+                        let embed = new RichEmbed()
+                            .setColor(config.colors.error)
+                            .setDescription('Invalid currency or base. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
+                            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                            .setTimestamp();
+                        event.channel.send(embed);
+                        return;
+                    }
+
                     let embed = new RichEmbed()
                         .setColor(config.colors.main)
-                        .addField(currency + '/' + defaultBase.toUpperCase(), getPrice(currency, defaultBase, config.default_decimals));
+                        .addField(currency + '/' + defaultBase.toUpperCase(), price);
                     Object.keys(config.other_base_displays || {}).forEach(base => {
                         baseUpper = base.toUpperCase();
                         if (baseUpper !== defaultBase) {
