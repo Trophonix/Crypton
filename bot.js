@@ -33,7 +33,7 @@ Files.readdir('./commands/', (err, files) => {
     files.forEach((file, index) => {
         console.log(file);
         if (file.endsWith('.command.js')) {
-            commands.push(require(file));
+            commands.push(require('./commands/' + file));
         }
     });
 });
