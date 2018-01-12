@@ -102,11 +102,10 @@ bot.on('message', event => {
                                 .addField('24hr Volume', tick[5])
                         }
                         BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
-                            embed
-                                .addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
-                                .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
-                                .setTimestamp();
-                            event.channel.send({embed});
+                        embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
+                            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                            .setTimestamp();
+                        event.channel.send({embed});
                         });
                     });
                 }
@@ -123,7 +122,7 @@ bot.on('message', event => {
                         .addField(`${config.prefix}invite`, 'Get an invite to add me to your server!')
                         .setAuthor(member.displayName, event.author.avatarURL)
                         .setTimestamp();
-                        event.channel.send({embed});
+                    event.channel.send({embed});
                 }
                 break;
             }
