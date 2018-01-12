@@ -111,11 +111,16 @@ bot.on('message', event => {
                     });
                 }
                 break;
+                case 'invite': {
+                    
+                }
+                break;
                 case 'help': {
                     let embed = new RichEmbed()
                         .setColor(config.colors.main)
                         .setDescription('Crypton is a bot made by Trophonix (Lucas#5300) for Cryptocurrency-related things. These are the commands currently available:')
                         .addField(`${config.prefix}price (currency) (base; default: BTC)`, 'Displays the price of (currency) against (base) along with some other stats.')
+                        .addField(`${config.prefix}invite`, 'Get an invite to add me to your server!')
                         .setAuthor(member.displayName, event.author.avatarURL)
                         .setTimestamp();
                         event.channel.send({embed});
