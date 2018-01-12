@@ -42,7 +42,7 @@ bot.on('message', event => {
                         return;
                     }
                     
-                    let currency = args[0].topUpperCase();
+                    let currency = args[0].toUpperCase();
                     let defaultBase = args[1] || config.default_base.toUpperCase() || "BTC";
 
                     BinanceAPI.prices(ticker => {
