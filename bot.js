@@ -17,7 +17,7 @@ getPrices();
 
 function getPrices() {
     BinanceAPI.prices(ticker => {
-        prices = ticker;
+        BinanceAPI.cache = ticker;
     });
 }
 setInterval(getPrices, 5000);
