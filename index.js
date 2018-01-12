@@ -61,7 +61,7 @@ bot.on('message', event => {
                         let embed = new RichEmbed()
                             .setColor(config.colors.error)
                             .setDescription('Incorrect usage!')
-                            .addField('Syntax', `${config.prefix}price (currency) (base [BTC])`)
+                            .addField('Syntax', `${config.prefix}price (currency) (base; default: BTC)`)
                             .addField('Example', `${config.prefix}price xrp eth`)
                             .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                             .setTimestamp();
@@ -109,6 +109,14 @@ bot.on('message', event => {
                             event.channel.send({embed});
                         });
                     });
+                    break;
+                case 'help':
+                    let embed = new RichEmbed()
+                        .setColor(config.colors.main)
+                        .setDescription('Crypton is a bot made by Trophonix (Lucas#5300) for Cryptocurrency-related things. These are the commands currently available:')
+                        .addField(`${config.prefix}price (currency) (base; default: BTC)`, 'Displays the price of (currency) against (base) along with some other stats.')
+                        .setAuthor(member.displayName, event.author.avatarURL)
+                        .setTimestamp();
                     break;
             }
         }).catch(console.error);
