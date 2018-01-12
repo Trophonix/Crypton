@@ -32,12 +32,13 @@ bot.on('message', event => {
             switch (command) {
                 case 'price':
                     if (args.length == 0) {
-                        event.channel.sendEmbed(new RichEmbed()
+                        let embed = new RichEmbed()
                             .setColor(config.colors.error)
                             .setDescription('Incorrect usage!')
                             .addField('Syntax', `${config.prefix}price (currency) (base [BTC])`, true)
                             .addField('Example', `${config.prefix}price xrp eth`, true)
-                            .setAuthor('Requested by ' + member.nickname, event.author.avatarURL));
+                            .setAuthor('Requested by ' + member.nickname, event.author.avatarURL);
+                        event.channel.send({embed});
                         return;
                     }
                     
@@ -54,7 +55,7 @@ bot.on('message', event => {
                                 embed.addField(currency.toUpperCase() + '/' + base.toUpperCase(), ticker[currency + base.toUpperCase()], true);
                             }
                         });
-                        event.channel.sendEmbed()
+                        event.channel.send({embed});
                     });
                     break;
             }
