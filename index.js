@@ -19,7 +19,7 @@ function getPrices() {
         prices = ticker;
     });
 }
-setInterval(getPrices(), 5000);
+setInterval(getPrices, 5000);
 
 function getPrice(currency, base) {
     if (base === 'USD') {
