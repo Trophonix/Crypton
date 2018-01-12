@@ -24,9 +24,7 @@ setInterval(getPrices, 5000);
 function getPrice(currency, base) {
     if (base === 'USD') {
         let btcPerUsd = prices.BTCUSDT;
-        if (typeof btcPerUsd === 'string') btcPerUsdt = parseInt(btcPerUsd);
         let price = prices[currency + base];
-        if (typeof price === 'string') price = parseInt(price);
         return prices[currency + base] * btcPerUsd;
     } else {
         return prices[currency + base];
@@ -73,7 +71,7 @@ bot.on('message', event => {
                     (config.other_base_displays || []).forEach(base => {
                         base = base.toUpperCase();
                         if (base !== defaultBase) {
-                            embed.addField(currency.toUpperCase() + '/' + base, getPrice(currency, base), true);
+                            embed.addField(currency.toUpperCase() + '/' + base, getPrice(currency, base).toString(), true);
                         }
                     });
                     embed.setAuthor('Requested by ' + member.nickname, event.author.avatarURL);
