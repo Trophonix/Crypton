@@ -43,7 +43,7 @@ bot.on('message', event => {
                     }
                     
                     let currency = args[0].toUpperCase();
-                    let defaultBase = args[1] || config.default_base.toUpperCase() || "BTC";
+                    let defaultBase = (args[1] || config.default_base).toUpperCase() || "BTC";
 
                     BinanceAPI.prices(ticker => {
                         let price = ticker[currency + defaultBase.toUpperCase()];
@@ -51,7 +51,7 @@ bot.on('message', event => {
                             .setColor(config.colors.main)
                             .addField(currency + '/' + defaultBase.toUpperCase(), price, true);
                         (config.other_base_displays || []).forEach(base => {
-                            if (!base.equalsIgnoreCase(defaultBase)) {
+                            if (base.toUpperCase() !== defaultBase) {
                                 embed.addField(currency.toUpperCase() + '/' + base.toUpperCase(), ticker[currency + base.toUpperCase()], true);
                             }
                         });
