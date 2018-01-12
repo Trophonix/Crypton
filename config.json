@@ -1,0 +1,17 @@
+{
+    "prefix": "$",
+    "token": "xxx",
+    "colors": {
+        "main": [255, 204, 0],
+        "error": [255, 0, 0]
+    },
+    "binance": {
+        "api_key": "xxx",
+        "api_secret": "xxx"
+    },
+    "default_base": "BTC",
+    "other_base_displays": [
+        "BTC",
+        "USD"
+    ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "crypton",
+  "version": "1.0.0",
+  "description": "Cryptocurrency-based discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trophonix/crypton.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "cryptocurrency",
+    "bitcoin",
+    "binance"
+  ],
+  "author": "Trophonix",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/trophonix/crypton/issues"
+  },
+  "homepage": "https://github.com/trophonix/crypton#readme",
+  "dependencies": {
+    "discord.js": "^11.2.1",
+    "node-binance-api": "^0.3.7"
+  }
+}
