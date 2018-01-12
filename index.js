@@ -35,8 +35,8 @@ bot.on('message', event => {
                         let embed = new RichEmbed()
                             .setColor(config.colors.error)
                             .setDescription('Incorrect usage!')
-                            .addField('Syntax', `${config.prefix}price (currency) (base [BTC])`, true)
-                            .addField('Example', `${config.prefix}price xrp eth`, true)
+                            .addField('Syntax', `${config.prefix}price (currency) (base [BTC])`)
+                            .addField('Example', `${config.prefix}price xrp eth`)
                             .setAuthor('Requested by ' + member.nickname, event.author.avatarURL);
                         event.channel.send({embed});
                         return;
