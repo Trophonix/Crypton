@@ -5,13 +5,13 @@ function getPrice(currency, base, decimals) {
     if (currency === base) return 1;
     let price;
     if (base === 'USD') {
-        let btcPerUsd = BinanceAPI.prices.BTCUSDT;
+        let btcPerUsd = BinanceAPI.cache.BTCUSDT;
         if (currency === 'BTC') return parseFloat(btcPerUsd).toFixed(2);
-        price = BinanceAPI.prices[currency + 'BTC'];
+        price = BinanceAPI.cache[currency + 'BTC'];
         if (price == null) return null;
         price *= btcPerUsd;
     } else {
-        price = BinanceAPI.prices[currency + base];
+        price = BinanceAPI.cache[currency + base];
         if (price == null) return null;
     }
     return parseFloat(price).toFixed(decimals);

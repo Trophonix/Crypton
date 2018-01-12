@@ -12,7 +12,7 @@ config.binance.APIKEY = config.binance.api_key;
 config.binance.APISECRET = config.binance.api_secret;
 BinanceAPI.options(config.binance);
 
-BinanceAPI.prices = {};
+BinanceAPI.cache = {};
 getPrices();
 
 function getPrices() {
