@@ -26,7 +26,7 @@ function getPrice(currency, base, decimals) {
     let price;
     if (base === 'USD') {
         let btcPerUsd = prices.BTCUSDT;
-        if (currency === 'BTC') return btcPerUsd;
+        if (currency === 'BTC') return parseFloat(btcPerUsd).toFixed(2);
         price = prices[currency + 'BTC'] * btcPerUsd;
     } else {
         price = prices[currency + base];
@@ -71,16 +71,28 @@ bot.on('message', event => {
 
                     let embed = new RichEmbed()
                         .setColor(config.colors.main)
-                        .addField(currency + '/' + defaultBase.toUpperCase(), getPrice(currency, defaultBase, config.default_decimals), true);
+                        .addBlankField()
+                        .addField(currency + '/' + defaultBase.toUpperCase(), getPrice(currency, defaultBase, config.default_decimals));
                     Object.keys(config.other_base_displays || {}).forEach(base => {
                         baseUpper = base.toUpperCase();
                         if (baseUpper !== defaultBase) {
-                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals).toString(), true);
+                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals).toString());
                         }
                     });
-                    embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
-                        .setTimestamp();
-                    event.channel.send({embed});
+
+                    BinanceAPI.candlesticks(currency + defaultBase, '24h', (ticks, symbol) => {
+                        BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
+                            embed.addBlankField()
+                                .addField('24hr High', ticks.high)
+                                .addField('24hr Low', ticks.low)
+                                .addBlankField()
+                                .addField('24hr Volume', ticks.volume)
+                                .addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
+                                .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                                .setTimestamp();
+                            event.channel.send({embed});
+                        });
+                    });
                     break;
             }
         }).catch(console.error);
