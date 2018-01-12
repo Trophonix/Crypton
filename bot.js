@@ -56,7 +56,7 @@ bot.on('message', event => {
         let cmd = args[0];
         args.splice(0, 1);
         event.guild.fetchMember(event.author).then(member => {
-            commands.forEach(command => {
+            bot.commands.forEach(command => {
                 if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
                     command.onCommand(event, member, event.channel, args);
                 }
