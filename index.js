@@ -56,7 +56,7 @@ bot.on('message', event => {
         args.splice(0, 1);
         event.guild.fetchMember(event.author).then(member => {
             switch (command) {
-                case 'price':
+                case 'price': {
                     if (args.length == 0) {
                         let embed = new RichEmbed()
                             .setColor(config.colors.error)
@@ -109,15 +109,17 @@ bot.on('message', event => {
                             event.channel.send({embed});
                         });
                     });
-                    break;
-                case 'help':
+                }
+                break;
+                case 'help': {
                     let embed = new RichEmbed()
                         .setColor(config.colors.main)
                         .setDescription('Crypton is a bot made by Trophonix (Lucas#5300) for Cryptocurrency-related things. These are the commands currently available:')
                         .addField(`${config.prefix}price (currency) (base; default: BTC)`, 'Displays the price of (currency) against (base) along with some other stats.')
                         .setAuthor(member.displayName, event.author.avatarURL)
                         .setTimestamp();
-                    break;
+                }
+                break;
             }
         }).catch(console.error);
     }
