@@ -6,7 +6,7 @@ const site = Express();
 site.get('/callback', (req, res) => res.redirect('https://github.com/Trophonix/Crypton/blob/master/CALLBACK.md'));
 
 site.get('/', (req, res) => {
-    console.log(req.headers.host);
+    console.log(req);
     if (req.subdomains && req.subdomains.length > 0 && req.subdomains[0].toLowerCase() === 'callback') {
         res.redirect('/callback');
         return;
