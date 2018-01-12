@@ -72,7 +72,10 @@ bot.on('message', event => {
                     let currency = args[0].toUpperCase();
                     let defaultBase = (args[1] || config.default_base).toUpperCase() || "BTC";
 
-                    let price = getPrice(currency, defaultBase, config.default_Decimals);
+                    console.log(defaultBase);
+                    let price = getPrice(currency, defaultBase.toUpperCase(), config.default_Decimals);
+                    console.log(price);
+
                     if (price == null) {
                         let embed = new RichEmbed()
                             .setColor(config.colors.error)
@@ -94,7 +97,6 @@ bot.on('message', event => {
                     });
 
                     BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
-                        console.log(ticks);
                         let tick = ticks[ticks.length - 1];
                         if (tick) {
                             embed.addField('24hr High', tick[2])
