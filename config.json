@@ -10,8 +10,9 @@
         "api_secret": "xxx"
     },
     "default_base": "BTC",
-    "other_base_displays": [
-        "BTC",
-        "USD"
-    ]
+    "default_decimals": 8,
+    "other_base_displays": {
+        "BTC": 8,
+        "USD": 2
+    }
 }

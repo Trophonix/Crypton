@@ -21,13 +21,15 @@ function getPrices() {
 }
 setInterval(getPrices, 5000);
 
-function getPrice(currency, base) {
+function getPrice(currency, base, decimals) {
+    let price;
     if (base === 'USD') {
         let btcPerUsd = prices.BTCUSDT;
-        return prices[currency + 'BTC'] * btcPerUsd;
+        price = prices[currency + 'BTC'] * btcPerUsd;
     } else {
-        return prices[currency + base];
+        price = prices[currency + base];
     }
+    return price.toFixed(decimals);
 }
 
 bot.on('ready', () => {
@@ -66,11 +68,11 @@ bot.on('message', event => {
 
                     let embed = new RichEmbed()
                         .setColor(config.colors.main)
-                        .addField(currency + '/' + defaultBase.toUpperCase(), getPrice(currency, defaultBase), true);
-                    (config.other_base_displays || []).forEach(base => {
-                        base = base.toUpperCase();
-                        if (base !== defaultBase) {
-                            embed.addField(currency.toUpperCase() + '/' + base, getPrice(currency, base).toString(), true);
+                        .addField(currency + '/' + defaultBase.toUpperCase(), getPrice(currency, defaultBase, config.default_decimals), true);
+                    Object.keys(config.other_base_displays || {}).forEach(base => {
+                        baseUpper = base.toUpperCase();
+                        if (baseUpper !== defaultBase) {
+                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base]).toString(), true);
                         }
                     });
                     embed.setAuthor('Requested by ' + member.nickname, event.author.avatarURL);
