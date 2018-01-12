@@ -72,9 +72,7 @@ bot.on('message', event => {
                     let currency = args[0].toUpperCase();
                     let defaultBase = (args[1] || config.default_base).toUpperCase() || "BTC";
 
-                    console.log(defaultBase);
-                    let price = getPrice(currency, defaultBase.toUpperCase(), config.default_Decimals);
-                    console.log(price);
+                    let price = getPrice(currency, defaultBase, config.default_decimals);
 
                     if (price == null) {
                         let embed = new RichEmbed()
@@ -88,7 +86,7 @@ bot.on('message', event => {
 
                     let embed = new RichEmbed()
                         .setColor(config.colors.main)
-                        .addField(currency + '/' + defaultBase.toUpperCase(), price);
+                        .addField(currency + '/' + defaultBase, price);
                     Object.keys(config.other_base_displays || {}).forEach(base => {
                         baseUpper = base.toUpperCase();
                         if (baseUpper !== defaultBase) {
