@@ -118,6 +118,7 @@ bot.on('message', event => {
                         .addField(`${config.prefix}price (currency) (base; default: BTC)`, 'Displays the price of (currency) against (base) along with some other stats.')
                         .setAuthor(member.displayName, event.author.avatarURL)
                         .setTimestamp();
+                        event.channel.send({embed});
                 }
                 break;
             }
