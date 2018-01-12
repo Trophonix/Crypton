@@ -1,4 +1,6 @@
 # Crypton
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTrophonix%2FCrypton.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FTrophonix%2FCrypton?ref=badge_shield)
+
 
 Crypton is a [Discord](https://discordapp.com) bot for fetching and displaying prices of cryptocurrencies from exchanges through their public APIs and more crypto-related stuff.
 
@@ -27,3 +29,7 @@ PayPal: [paypal.me](https://paypal.me/trophonix/5)
 Ko-Fi: [Trophonix](https://ko-fi.com/trophonix)
 
 DOGE: `DSjcXTzYQ8N1a1UdwcNaYoaQofJRF99JHU`
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTrophonix%2FCrypton.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTrophonix%2FCrypton?ref=badge_large)
