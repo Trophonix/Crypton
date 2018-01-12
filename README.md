@@ -22,7 +22,7 @@ You can contact me, Trophonix in several ways:
 
 If you'd like to thank me for this and/or any of my other public projects, I would very much appreciate it.
 
-PayPal: [trophonix.paypal.me](trophonix.paypal.me/5)
+PayPal: [paypal.me](https://paypal.me/trophonix/5)
 
 Ko-Fi: [Trophonix](https://ko-fi.com/trophonix)
 
