@@ -15,7 +15,7 @@ bot.on('ready', () => {
     bot.user.setPresence({
         status: 'online',
         game: {
-            name: `${config.prefix} help`
+            name: `${config.prefix}help`
         }
     })
     console.log('Connected to discord.');
@@ -35,8 +35,8 @@ bot.on('message', event => {
                         event.channel.sendEmbed(new RichEmbed()
                             .setColor(config.colors.error)
                             .setDescription('Incorrect usage!')
-                            .addField('Syntax', `${config.prefix} price (currency) (base; default: btc)`, true)
-                            .addField('Example', `${config.prefix} price xrp eth`, true)
+                            .addField('Syntax', `${config.prefix}price (currency) (base [BTC])`, true)
+                            .addField('Example', `${config.prefix}price xrp eth`, true)
                             .setAuthor('Requested by ' + member.nickname, event.author.avatarURL));
                         return;
                     }
