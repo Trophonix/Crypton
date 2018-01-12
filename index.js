@@ -9,4 +9,4 @@ site.get('/', (req, res) => res.redirect('https://github.com/Trophonix/Crypton')
 
 site.listen(config.port || 5000, () => console.log(`Listening on port ${config.port}`));
 
-require('bot');
+require('./bot');
