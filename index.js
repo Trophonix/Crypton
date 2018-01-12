@@ -81,12 +81,15 @@ bot.on('message', event => {
 
                     BinanceAPI.candlesticks(currency + defaultBase, '24h', (ticks, symbol) => {
                         let tick = ticks[ticks.length - 1];
-                        BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
-                            embed.addBlankField()
-                                .addField('24hr High', tick.high)
+                        embed.addBlankField();
+                        if (tick) {
+                            embed.addField('24hr High', tick.high)
                                 .addField('24hr Low', tick.low)
                                 .addBlankField()
                                 .addField('24hr Volume', tick.volume)
+                        }
+                        BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
+                            embed.addBlankField()
                                 .addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
                                 .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                                 .setTimestamp();
