@@ -23,14 +23,16 @@ setInterval(getPrices, 5000);
 
 function getPrice(currency, base, decimals) {
     if (currency === base) return 1;
-    if (prices[currency + base] == null) return null;
     let price;
     if (base === 'USD') {
         let btcPerUsd = prices.BTCUSDT;
         if (currency === 'BTC') return parseFloat(btcPerUsd).toFixed(2);
-        price = prices[currency + 'BTC'] * btcPerUsd;
+        price = prices[currency + 'BTC'];
+        if (price == null) return null;
+        price *= btcPerUsd;
     } else {
         price = prices[currency + base];
+        if (price == null) return null;
     }
     return parseFloat(price).toFixed(decimals);
 }
@@ -87,7 +89,7 @@ bot.on('message', event => {
                     Object.keys(config.other_base_displays || {}).forEach(base => {
                         baseUpper = base.toUpperCase();
                         if (baseUpper !== defaultBase) {
-                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals).toString());
+                            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
                         }
                     });
 
