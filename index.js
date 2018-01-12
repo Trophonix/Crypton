@@ -83,8 +83,8 @@ bot.on('message', event => {
                         console.log(ticks);
                         let tick = ticks[ticks.length - 1];
                         if (tick) {
-                            embed.addField('24hr High', tick.high)
-                                .addField('24hr Low', tick.low)
+                            embed.addField('24hr High', tick.highPrice)
+                                .addField('24hr Low', tick.lowPrice)
                                 .addField('24hr Volume', tick.volume)
                         }
                         BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
