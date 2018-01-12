@@ -110,8 +110,16 @@ bot.on('message', event => {
                     });
                 }
                 break;
-                case 'invite': {
-                    
+                case 'invite':
+                case 'add':
+                {
+                    let embed = new RichEmbed()
+                        .setColor(config.colors.main)
+                        .setDescription('Click here to add Crypton to your server!')
+                        .setURL(config.invite_url)
+                        .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                        .setTimestamp();
+                    event.channel.send({embed});
                 }
                 break;
                 case 'help': {
@@ -120,7 +128,7 @@ bot.on('message', event => {
                         .setDescription('Crypton is a bot made by Trophonix (Lucas#5300) for Cryptocurrency-related things. These are the commands currently available:')
                         .addField(`${config.prefix}price (currency) (base; default: BTC)`, 'Displays the price of (currency) against (base) along with some other stats.')
                         .addField(`${config.prefix}invite`, 'Get an invite to add me to your server!')
-                        .setAuthor(member.displayName, event.author.avatarURL)
+                        .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                         .setTimestamp();
                     event.channel.send({embed});
                 }
