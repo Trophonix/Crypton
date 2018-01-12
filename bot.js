@@ -53,9 +53,15 @@ bot.on('message', event => {
     if (message.startsWith(config.prefix)) {
         message = message.replace(config.prefix, '');
         let args = message.split(' ');
-        let command = args[0];
+        let cmd = args[0];
         args.splice(0, 1);
-        
+        event.guild.fetchMember(event.author).then(member => {
+            commands.forEach(command => {
+                if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
+                    command.onCommand(event, member, event.channel, args);
+                }
+            });
+        }).catch(console.error);
     }
 });
 
