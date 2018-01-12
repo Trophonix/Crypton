@@ -25,6 +25,7 @@
   "homepage": "https://github.com/trophonix/crypton#readme",
   "dependencies": {
     "discord.js": "^11.2.1",
+    "express": "^4.16.2",
     "node-binance-api": "^0.3.7"
   }
 }
