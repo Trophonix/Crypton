@@ -52,9 +52,10 @@ module.exports = (bot, config) => {
 
             let temp = new RichEmbed()
                 .setColor(config.colors.main)
-                .setTitle('Gathering data... <a:loading:401678813605527552>')
-                channel.send({embed}).then(tempMessage => {
-                    let embed = new RichEmbed()
+                .setTitle('Gathering data... <a:loading:401678813605527552>');
+                
+            channel.send({temp}).then(tempMessage => {
+                let embed = new RichEmbed()
                     .setColor(config.colors.main)
                     .addField(currency + '/' + defaultBase, price);
                 Object.keys(config.other_base_displays || {}).forEach(base => {
