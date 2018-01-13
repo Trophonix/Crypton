@@ -57,7 +57,7 @@ module.exports = (bot, config) => {
                 .setTimestamp();
             console.log(temp);
             console.log('sending');
-            channel.send({temp}).then(tempMessage => {
+            channel.send({embed: temp}).then(tempMessage => {
                 console.log('sent');
                 let embed = new RichEmbed()
                     .setColor(config.colors.main)
