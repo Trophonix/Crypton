@@ -75,7 +75,7 @@ module.exports = (bot, config) => {
                     }
                     BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
                         if (prevDay) {
-                            embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
+                            if (prevDay.priceChangePercent) embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
                         }
                         embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                             .setTimestamp();
