@@ -5,7 +5,7 @@ module.exports = (bot, config) => {
     return {
         aliases: ['suggest'],
         usage: 'suggest (idea...)',
-        description: 'Suggest ideas to my creator',
+        description: 'Suggest ideas to my creator (abuse will lead to being blocked from using this command)',
         onCommand: (event, member, channel, args) => {
             if (args.length == 0) {
                 let embed = new RichEmbed()
@@ -24,7 +24,7 @@ module.exports = (bot, config) => {
                 let embed = new RichEmbed()
                     .setColor(config.colors.main)
                     .setDescription(args.join(' '))
-                    .setAuthor('Suggestion from ' + member.displayName, event.author.avatarURL)
+                    .setAuthor('Suggestion from ' + event.user.name + '#' + event.user.discriminator, event.author.avatarURL)
                     .setTimestamp();
                 if (!lucas.dmChannel) {
                     lucas.createDM().then(dmChannel => dmChannel.send({embed}));
