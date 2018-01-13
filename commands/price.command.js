@@ -50,6 +50,11 @@ module.exports = (bot, config) => {
                 return;
             }
 
+            let temp = new RichEmbed()
+                .setColor(config.colors.main)
+                .setTitle('Gathering data... ')
+            channel.send({})
+
             let embed = new RichEmbed()
                 .setColor(config.colors.main)
                 .addField(currency + '/' + defaultBase, price);
