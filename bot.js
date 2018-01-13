@@ -42,7 +42,7 @@ bot.on('ready', () => {
     bot.user.setPresence({
         status: 'online',
         game: {
-            name: `${config.prefix}help`
+            name: `in ${bot.guilds ? bot.guilds.length : 0} guilds | ${config.prefix}help`
         }
     })
     console.log('Connected to discord.');
