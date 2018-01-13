@@ -53,7 +53,7 @@ module.exports = (bot, config) => {
             let temp = new RichEmbed()
                 .setColor(config.colors.main)
                 .setTitle('Gathering data... <a:loading:401678813605527552>');
-                
+
             channel.send({temp}).then(tempMessage => {
                 let embed = new RichEmbed()
                     .setColor(config.colors.main)
@@ -76,10 +76,10 @@ module.exports = (bot, config) => {
                         embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
                             .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                             .setTimestamp();
-                        channel.send({embed}).then(res => tempMessage.delete());
+                        channel.send({embed}).then(res => tempMessage.delete()).catch(console.error);
                     });
                 });
-            });
+            }).catch(console.error);
         }
     }
 }
