@@ -26,7 +26,7 @@ module.exports = (bot, config) => {
             if (args.length == 0) {
                 let embed = new RichEmbed()
                     .setColor(config.colors.error)
-                    .setDescription('Incorrect usage!')
+                    .setTitle('Incorrect usage!')
                     .addField('Syntax', `${config.prefix}price (currency) (base; default: BTC)`)
                     .addField('Example', `${config.prefix}price xrp eth`)
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
