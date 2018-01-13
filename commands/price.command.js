@@ -73,7 +73,7 @@ module.exports = (bot, config) => {
                             .addField('24hr Low', tick[3])
                             .addField('24hr Volume', tick[5])
                     }
-                    BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
+                    BinanceAPI.prevDay(currency + (currency === 'BTC' ? 'USDT' : 'BTC'), (prevDay, symbol) => {
                         if (prevDay) {
                             if (prevDay.priceChangePercent) embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
                         }
