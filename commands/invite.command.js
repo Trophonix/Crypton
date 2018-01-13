@@ -8,7 +8,7 @@ module.exports = (bot, config) => {
         onCommand: (event, member, channel, args) => {
             let embed = new RichEmbed()
                 .setColor(config.colors.main)
-                .setDescription('Click here to add Crypton to your server!')
+                .setTitle('Click here to add Crypton to your server!')
                 .setURL(config.invite_url)
                 .setAuthor('Requested by ' + member.displayName, member.user.avatarURL)
                 .setTimestamp();
