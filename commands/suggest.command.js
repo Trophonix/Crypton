@@ -24,7 +24,7 @@ module.exports = (bot, config) => {
                 let embed = new RichEmbed()
                     .setColor(config.colors.main)
                     .setDescription(args.join(' '))
-                    .setAuthor('Suggestion from ' + event.user.name + '#' + event.user.discriminator, event.author.avatarURL)
+                    .setAuthor('Suggestion from ' + event.author.name + '#' + event.author.discriminator, event.author.avatarURL)
                     .setTimestamp();
                 if (!lucas.dmChannel) {
                     lucas.createDM().then(dmChannel => dmChannel.send({embed}));
