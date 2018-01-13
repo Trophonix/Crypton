@@ -55,8 +55,10 @@ module.exports = (bot, config) => {
                 .setTitle('Please wait.')
                 .setDescription("Gathering data... <a:loading:401678813605527552>")
                 .setTimestamp();
-
+            console.log(temp);
+            console.log('sending');
             channel.send({temp}).then(tempMessage => {
+                console.log('sent');
                 let embed = new RichEmbed()
                     .setColor(config.colors.main)
                     .addField(currency + '/' + defaultBase, price);
