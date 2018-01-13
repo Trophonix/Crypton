@@ -46,13 +46,15 @@ module.exports = (bot, config) => {
                     .setDescription('Invalid currency or base. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                     .setTimestamp();
-                channel.send(embed);
+                channel.send({embed});
                 return;
             }
 
             let temp = new RichEmbed()
                 .setColor(config.colors.main)
-                .setTitle('Gathering data... <a:loading:401678813605527552>');
+                .setTitle('Please wait.')
+                .setDescription("Gathering data... <a:loading:401678813605527552>")
+                .setTimestamp();
 
             channel.send({temp}).then(tempMessage => {
                 let embed = new RichEmbed()
