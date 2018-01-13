@@ -43,7 +43,7 @@ module.exports = (bot, config) => {
             if (price == null) {
                 let embed = new RichEmbed()
                     .setColor(config.colors.error)
-                    .setDescription('Invalid currency or base. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
+                    .setDescription('Unknown market. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                     .setTimestamp();
                 channel.send({embed});
@@ -66,6 +66,7 @@ module.exports = (bot, config) => {
                     }
                 });
 
+                
                 BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
                     let tick = ticks[ticks.length - 1];
                     if (tick) {
