@@ -5,23 +5,6 @@ const Files = require('fs');
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const BinanceAPI = require('node-binance-api');
-
-// Turn my pretty keys into compatible ones
-config.binance.APIKEY = config.binance.api_key;
-config.binance.APISECRET = config.binance.api_secret;
-BinanceAPI.options(config.binance);
-
-BinanceAPI.cache = {};
-getPrices();
-
-function getPrices() {
-    BinanceAPI.prices(ticker => {
-        BinanceAPI.cache = ticker;
-    });
-}
-setInterval(getPrices, 5000);
-
 bot.commands = [];
 Files.readdir('./commands/', (err, files) => {
     if (err) {
@@ -38,7 +21,7 @@ Files.readdir('./commands/', (err, files) => {
     });
 });
 
-bot.on('ready', () => {
+function updatePresence() {
     let guilds = bot.guilds ? bot.guilds.array().length : 0;
     bot.user.setPresence({
         status: 'online',
@@ -46,8 +29,15 @@ bot.on('ready', () => {
             name: `in ${guilds} guild${guilds == 1 ? '' : 's'} | ${config.prefix}help`
         }
     })
+}
+
+bot.on('ready', () => {
+    updatePresence();
     console.log('Connected to discord.');
 });
+
+bot.on('guildCreate', guild => updatePresence());
+bot.on('guildDelete', guild => updatePresence());
 
 bot.on('message', event => {
     let message = event.content.toLowerCase();

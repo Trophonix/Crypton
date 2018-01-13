@@ -1,5 +1,22 @@
 const config = require('./config.json');
 
+const BinanceAPI = require('node-binance-api');
+
+// Turn my pretty keys into compatible ones
+config.binance.APIKEY = config.binance.api_key;
+config.binance.APISECRET = config.binance.api_secret;
+BinanceAPI.options(config.binance);
+
+BinanceAPI.cache = {};
+getPrices();
+
+function getPrices() {
+    BinanceAPI.prices(ticker => {
+        BinanceAPI.cache = ticker;
+    });
+}
+setInterval(getPrices, 5000);
+
 const Express = require('express');
 const site = Express();
 
