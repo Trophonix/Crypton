@@ -43,7 +43,7 @@ module.exports = (bot, config) => {
             if (price == null) {
                 let embed = new RichEmbed()
                     .setColor(config.colors.error)
-                    .setDescription('Unknown market. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
+                    .setTitle('Unknown market. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                     .setTimestamp();
                 channel.send({embed});
