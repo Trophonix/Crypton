@@ -39,10 +39,11 @@ Files.readdir('./commands/', (err, files) => {
 });
 
 bot.on('ready', () => {
+    let guilds = bot.guilds ? bot.guilds.array().length : 0;
     bot.user.setPresence({
         status: 'online',
         game: {
-            name: `in ${bot.guilds ? bot.guilds.array().length : 0} guilds | ${config.prefix}help`
+            name: `in ${guilds} guild${guilds == 1 ? '' : 's'} | ${config.prefix}help`
         }
     })
     console.log('Connected to discord.');
