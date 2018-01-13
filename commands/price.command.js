@@ -52,31 +52,31 @@ module.exports = (bot, config) => {
 
             let temp = new RichEmbed()
                 .setColor(config.colors.main)
-                .setTitle('Gathering data... ')
-            channel.send({})
+                .setTitle('Gathering data... <a:loading:401678813605527552>')
+                channel.send({embed}).then(tempMessage => {
+                    let embed = new RichEmbed()
+                    .setColor(config.colors.main)
+                    .addField(currency + '/' + defaultBase, price);
+                Object.keys(config.other_base_displays || {}).forEach(base => {
+                    baseUpper = base.toUpperCase();
+                    if (baseUpper !== defaultBase) {
+                        embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
+                    }
+                });
 
-            let embed = new RichEmbed()
-                .setColor(config.colors.main)
-                .addField(currency + '/' + defaultBase, price);
-            Object.keys(config.other_base_displays || {}).forEach(base => {
-                baseUpper = base.toUpperCase();
-                if (baseUpper !== defaultBase) {
-                    embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
-                }
-            });
-
-            BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
-                let tick = ticks[ticks.length - 1];
-                if (tick) {
-                    embed.addField('24hr High', tick[2])
-                        .addField('24hr Low', tick[3])
-                        .addField('24hr Volume', tick[5])
-                }
-                BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
-                    embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
-                        .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
-                        .setTimestamp();
-                    channel.send({embed});
+                BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
+                    let tick = ticks[ticks.length - 1];
+                    if (tick) {
+                        embed.addField('24hr High', tick[2])
+                            .addField('24hr Low', tick[3])
+                            .addField('24hr Volume', tick[5])
+                    }
+                    BinanceAPI.prevDay(currency + 'BTC', (prevDay, symbol) => {
+                        embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈' : '📉' }`)
+                            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+                            .setTimestamp();
+                        channel.send({embed}).then(res => tempMessage.delete());
+                    });
                 });
             });
         }
