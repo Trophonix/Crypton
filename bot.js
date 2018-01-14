@@ -15,9 +15,7 @@ Files.readdir('./commands/', (err, files) => {
 
     files.forEach((file, index) => {
         console.log(file);
-        if (file.endsWith('.command.js')) {
-            bot.commands.push(require('./commands/' + file)(bot, config));
-        }
+        if (file.endsWith('.command.js')) bot.commands.push(require('./commands/' + file)(bot, config));
     });
 });
 
@@ -46,13 +44,11 @@ bot.on('message', event => {
         let args = message.split(' ');
         let cmd = args[0];
         args.splice(0, 1);
-        if (event && event.guild) event.guild.fetchMember(event.author).then(member => {
-            bot.commands.forEach(command => {
-                if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
-                    command.onCommand(event, member, event.channel, args);
-                }
-            });
-        }).catch(console.error);
+        if (event && event.guild) event.guild.fetchMember(event.author).then(member => bot.commands.forEach(command => {
+            if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
+                command.onCommand(event, member, event.channel, args);
+            }
+        })).catch(console.error);
     }
 });
 
