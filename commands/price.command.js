@@ -80,7 +80,7 @@ module.exports = (bot, config) => {
                         }
                         embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                             .setTimestamp();
-                        channel.send({embed}).then(res => tempMessage.delete()).catch(console.error);
+                        tempMessage.edit({embed}).catch(console.error);
                     });
                 });
             }).catch(console.error);
