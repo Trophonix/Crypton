@@ -1,3 +1,5 @@
+const Async = require('async');
+
 const Discord = require('discord.js');
 const RichEmbed = Discord.RichEmbed;
 
@@ -19,12 +21,7 @@ module.exports = (bot, config) => {
                 return;
             }
 
-            let response = new RichEmbed()
-                .setColor(config.colors.main)
-                .setTitle('Suggestion sent:')
-                .setDescription(args.join(' '))
-                .setTimestamp();
-            channel.send({embed: response}).catch(console.error);
+
             
             let lucas = bot.users.get('138168338525192192');
             if (lucas) {
@@ -33,11 +30,32 @@ module.exports = (bot, config) => {
                     .setDescription(args.join(' '))
                     .setAuthor('Suggestion from ' + event.author.username + '#' + event.author.discriminator, event.author.avatarURL)
                     .setTimestamp();
-                if (!lucas.dmChannel) {
-                    lucas.createDM().then(dmChannel => dmChannel.send({embed})).catch(console.error);
-                } else {
-                    lucas.dmChannel.send({embed}).catch(console.error);
-                }
+                Async.series([
+                    next => {
+                        if (!lucas.dmChannel) {
+                            lucas.createDM().then(dmChannel => dmChannel.send({embed})).then(message => next()).catch(err => next(err));
+                        } else {
+                            lucas.dmChannel.send({embed}).then(message => next()).catch(err => next(err));
+                        }
+                    }
+                ], (err) => {
+                    if (err) {
+                        console.error(err);
+                        let response = new RichEmbed()
+                            .setColor(config.colors.error)
+                            .setTitle('Something went wrong!')
+                            .setDescription("Make sure your suggestion didn't go over 1024 characters long!")
+                            .setTimestamp();
+                        channel.send({embed: response}).catch(console.error);
+                    } else {
+                        let response = new RichEmbed()
+                            .setColor(config.colors.main)
+                            .setTitle('Suggestion sent:')
+                            .setDescription(args.join(' '))
+                            .setTimestamp();
+                        channel.send({embed: response}).catch(console.error);
+                    }
+                })
             }
         }
     }
