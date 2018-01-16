@@ -34,9 +34,9 @@ module.exports = (bot, config) => {
                     .setAuthor('Suggestion from ' + event.author.username + '#' + event.author.discriminator, event.author.avatarURL)
                     .setTimestamp();
                 if (!lucas.dmChannel) {
-                    lucas.createDM().then(dmChannel => dmChannel.send({embed}));
+                    lucas.createDM().then(dmChannel => dmChannel.send({embed})).catch(console.error);
                 } else {
-                    lucas.dmChannel.send({embed});
+                    lucas.dmChannel.send({embed}).catch(console.error);
                 }
             }
         }
