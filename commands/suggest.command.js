@@ -21,7 +21,8 @@ module.exports = (bot, config) => {
 
             let response = new RichEmbed()
                 .setColor(config.colors.main)
-                .setTitle('Suggestion sent!')
+                .setTitle('Suggestion sent:')
+                .setDescription(args.join(' '))
                 .setTimestamp();
             channel.send({embed: response});
             
