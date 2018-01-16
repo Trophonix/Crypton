@@ -18,6 +18,12 @@ module.exports = (bot, config) => {
                 channel.send({embed});
                 return;
             }
+
+            let response = new RichEmbed()
+                .setColor(config.colors.main)
+                .setTitle('Suggestion sent!')
+                .setTimestamp();
+            channel.send({embed: response});
             
             let lucas = bot.users.get('138168338525192192');
             if (lucas) {
