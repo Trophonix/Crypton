@@ -15,7 +15,7 @@ module.exports = (bot, config) => {
                 let command = bot.commands[key];
                 embed.addField(config.prefix + command.usage, command.description);
             });
-            channel.send({embed});
+            channel.send({embed}).catch(console.error);
         }
     }
 }

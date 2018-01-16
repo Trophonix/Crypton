@@ -12,7 +12,7 @@ module.exports = (bot, config) => {
                 .setURL(config.invite_url)
                 .setAuthor('Requested by ' + member.displayName, member.user.avatarURL)
                 .setTimestamp();
-            channel.send({embed});
+            channel.send({embed}).catch(console.error);
         }
     }
 }

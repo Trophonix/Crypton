@@ -31,7 +31,7 @@ module.exports = (bot, config) => {
                     .addField('Example', `${config.prefix}price xrp eth`)
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                     .setTimestamp();
-                channel.send({embed});
+                channel.send({embed}).catch(console.error);
                 return;
             }
             
@@ -46,7 +46,7 @@ module.exports = (bot, config) => {
                     .setTitle('Unknown market. Make sure you\'re using abbreviations (e.g. BTC not Bitcoin)')
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                     .setTimestamp();
-                channel.send({embed});
+                channel.send({embed}).catch(console.error);
                 return;
             }
 

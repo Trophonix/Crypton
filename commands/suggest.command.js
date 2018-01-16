@@ -15,7 +15,7 @@ module.exports = (bot, config) => {
                     .addField('Example', `${config.prefix}suggest More potatoes pls`)
                     .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                     .setTimestamp();
-                channel.send({embed});
+                channel.send({embed}).catch(console.error);
                 return;
             }
 
@@ -24,7 +24,7 @@ module.exports = (bot, config) => {
                 .setTitle('Suggestion sent:')
                 .setDescription(args.join(' '))
                 .setTimestamp();
-            channel.send({embed: response});
+            channel.send({embed: response}).catch(console.error);
             
             let lucas = bot.users.get('138168338525192192');
             if (lucas) {
