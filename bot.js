@@ -45,9 +45,9 @@ bot.on('message', event => {
         let cmd = args[0];
         args.splice(0, 1);
         if (event && event.guild) {
-            console.log(`[${event.guild.name} (${event.guild.id})] ${event.author.username}#${event.author.discriminator}: ${config.prefix}${cmd} ${args.join(' ')}`);
             event.guild.fetchMember(event.author).then(member => bot.commands.forEach(command => {
                 if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
+                    console.log(`[${event.guild.name} (${event.guild.id})] ${event.author.username}#${event.author.discriminator}: ${config.prefix}${cmd} ${args.join(' ')}`);
                     command.onCommand(event, member, event.channel, args);
                 }
             })).catch(console.error);
