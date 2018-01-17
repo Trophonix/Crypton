@@ -15,6 +15,7 @@ module.exports = (bot, config) => {
                 let command = bot.commands[key];
                 embed.addField(config.prefix + command.usage, command.description);
             });
+            embed.addField('Need support or have suggestions?', 'Join my support server: https://crypton.fun/support')
             channel.send({embed}).catch(console.error);
         }
     }
