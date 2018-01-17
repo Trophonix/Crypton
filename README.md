@@ -10,7 +10,12 @@ Crypton is a [Discord](https://discordapp.com) bot for fetching and displaying p
 
 # How to Contribute
 
-Coming soon
+1. Use the "fork" button (or [click here](https://github.com/trophonix/crypton#fork-destination-box)) and select which account/organization to fork the code to.
+2. Clone your fork to your PC
+3. Make the desired changes/fixes
+4. Push to your fork
+5. Create a pull request with an informative and detailed title and summary
+6. I'll get to it as soon as I can and either accept it into my code or get back to you on what needs fixing!
 
 # Contact Me
 
