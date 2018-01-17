@@ -44,11 +44,14 @@ bot.on('message', event => {
         let args = message.split(' ');
         let cmd = args[0];
         args.splice(0, 1);
-        if (event && event.guild) event.guild.fetchMember(event.author).then(member => bot.commands.forEach(command => {
-            if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
-                command.onCommand(event, member, event.channel, args);
-            }
-        })).catch(console.error);
+        if (event && event.guild) {
+            console.log('[' + event.guild.name + '] ' + event.author.username + '#' + event.author.discriminator + ' > ' + cmd + ' ' + args.join(' '));
+            event.guild.fetchMember(event.author).then(member => bot.commands.forEach(command => {
+                if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
+                    command.onCommand(event, member, event.channel, args);
+                }
+            })).catch(console.error);
+        }
     }
 });
 
