@@ -10,6 +10,7 @@ function getPrice(currency, base, decimals) {
         price = BinanceAPI.cache[currency + 'BTC'];
         if (price == null) return null;
         price *= btcPerUsd;
+        return parseFloat(price).toFixed(decimals);
     } else {
         price = BinanceAPI.cache[currency + base];
         if (price == null) return null;
