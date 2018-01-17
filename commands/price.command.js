@@ -6,7 +6,7 @@ function getPrice(currency, base, decimals) {
     let price;
     if (base === 'USD') {
         let btcPerUsd = BinanceAPI.cache.BTCUSDT;
-        if (currency === 'BTC') return parseFloat(btcPerUsd).toFixed(2);
+        if (currency === 'BTC') return parseFloat(btcPerUsd.toFixed(2)).toString();
         price = BinanceAPI.cache[currency + 'BTC'];
         if (price == null) return null;
         price *= btcPerUsd;
@@ -14,7 +14,7 @@ function getPrice(currency, base, decimals) {
         price = BinanceAPI.cache[currency + base];
         if (price == null) return null;
     }
-    return parseFloat(price).toFixed(decimals);
+    return parseFloat(parseFloat(price).toFixed(decimals)).toString();
 }
 
 module.exports = (bot, config) => {
@@ -70,12 +70,13 @@ module.exports = (bot, config) => {
                 BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
                     let tick = ticks[ticks.length - 1];
                     if (tick) {
-                        embed.addField('24hr High', tick[2])
-                            .addField('24hr Low', tick[3])
-                            .addField('24hr Volume', tick[5])
+                        embed.addField('24hr High', parseFloat(tick[2]).toString())
+                            .addField('24hr Low', parseFloat(tick[3]).toString())
+                            .addField('24hr Volume', parseFloat(tick[5]).toString())
                     }
                     BinanceAPI.prevDay(currency + (currency === 'BTC' ? 'USDT' : 'BTC'), (prevDay, symbol) => {
                         if (prevDay) {
+                            let percent = parseFloat(parseFloat(prevDay.priceChangePercent).toFixed(2)).toString();
                             if (prevDay.priceChangePercent) embed.addField('24hr Change', `${prevDay.priceChangePercent}% ${prevDay.priceChangePercent > 0 ? '📈 ⤴' : '📉 ⤵' }`)
                         }
                         embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
