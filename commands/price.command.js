@@ -71,9 +71,9 @@ module.exports = (bot, config) => {
                 BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
                     let tick = ticks[ticks.length - 1];
                     if (tick) {
-                        embed.addField('24hr High', `${parseFloat(tick[2]).toString()} (${base})`)
-                            .addField('24hr Low', `${parseFloat(tick[3]).toString()} (${base})`)
-                            .addField('24hr Volume', `${parseFloat(tick[5]).toString()} (${base})`)
+                        embed.addField('24hr High', `${parseFloat(tick[2]).toString()} (${defaultBase})`)
+                            .addField('24hr Low', `${parseFloat(tick[3]).toString()} (${defaultBase})`)
+                            .addField('24hr Volume', `${parseFloat(tick[5]).toString()} (${defaultBase})`)
                     }
                     BinanceAPI.prevDay(currency + (currency === 'BTC' ? 'USDT' : 'BTC'), (prevDay, symbol) => {
                         if (prevDay) {
