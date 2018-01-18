@@ -18,6 +18,11 @@ function getPrice(currency, base, decimals) {
     return parseFloat(parseFloat(price).toFixed(decimals)).toString();
 }
 
+function handleError(err, tempMessage) {
+    tempMessage.delete();
+    console.error(err);
+}
+
 module.exports = (bot, config) => {
     return {
         aliases: ['price'],
@@ -65,9 +70,7 @@ module.exports = (bot, config) => {
                     if (baseUpper !== defaultBase) {
                         embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
                     }
-                });
-
-                
+                });                
                 BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
                     let tick = ticks[ticks.length - 1];
                     if (tick) {
@@ -82,7 +85,7 @@ module.exports = (bot, config) => {
                         }
                         embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
                             .setTimestamp();
-                        tempMessage.edit({embed}).catch(console.error);
+                        tempMessage.edit({embed}).catch(err => handleError(err, tempMessage));
                     });
                 });
             }).catch(console.error);
