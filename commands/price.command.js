@@ -42,7 +42,7 @@ module.exports = (bot, config) => {
             }
             
             let currency = args[0].toUpperCase();
-            let defaultBase = (args[1] || config.default_base).toUpperCase() || "BTC";
+            let defaultBase = currency === 'BTC' ? 'USDT' : (args[1] || config.default_base).toUpperCase() || "BTC";
 
             let price = getPrice(currency, defaultBase, config.default_decimals);
 
