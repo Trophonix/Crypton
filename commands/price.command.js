@@ -6,7 +6,7 @@ function getPrice(currency, base, decimals) {
     let price;
     if (base === 'USD') {
         let btcPerUsd = BinanceAPI.cache.BTCUSDT;
-        if (currency === 'BTC') return parseFloat(btcPerUsd.toFixed(2)).toString();
+        if (currency === 'BTC') return parseFloat(parseFloat(btcPerUsd).toFixed()).toString();
         price = BinanceAPI.cache[currency + 'BTC'];
         if (price == null) return null;
         price *= btcPerUsd;
