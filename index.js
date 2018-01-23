@@ -21,7 +21,7 @@ function getPrices () {
       global.cache[market] = {
         price: ticker[market]
       };
-      console.log(market + ':' + global.cache[market]);
+      console.log(market + ':' + global.cache[market].toString());
     });
     BittrexAPI.getmarketsummaries((data, err) => {
       if (err) return console.error(err);
