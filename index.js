@@ -3,19 +3,51 @@ const config = require('./config.json');
 const BinanceAPI = require('node-binance-api');
 
 // Turn my pretty keys into compatible ones
-config.binance.APIKEY = config.binance.api_key;
-config.binance.APISECRET = config.binance.api_secret;
-BinanceAPI.options(config.binance);
+config.exchanges.binance.APIKEY = config.exchanges.binance.api_key;
+config.exchanges.binance.APISECRET = config.exchanges.binance.api_secret;
+BinanceAPI.options(config.exchanges.binance);
 
-BinanceAPI.cache = {};
+config.exchanges.bittrex.apikey = config.exchanges.bittrex.api_key;
+config.exchanges.bittrex.apisecret = config.exchanges.bittrex.api_secret;
+const BittrexAPI = require('node-bittrex-api');
+BittrexAPI.options(config.exchanges.bittrex);
+
+global.cache = {};
 getPrices();
 
 function getPrices () {
   BinanceAPI.prices(ticker => {
-    BinanceAPI.cache = ticker;
+    Object.keys(ticker).forEach(market => {
+      global.cache[market] = {
+        price: ticker[market]
+      };
+    });
+    BittrexAPI.getmarketsummaries((data, err) => {
+      if (err) return console.error(err);
+      data.result.forEach(marketData => {
+        let market = marketData.MarketName.replace('-', '');
+        let existing = global.cache[market];
+        if (existing) {
+          existing.price += marketData.Last;
+          existing.price /= 2;
+          existing.volume = marketData.Volume;
+          existing.high = marketData.High;
+          existing.low = marketData.Low;
+          existing.change = -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100);
+        } else {
+          global.cache[market] = {
+            price: marketData.Last,
+            volume: marketData.Volume,
+            high: marketData.High,
+            low: marketData.Low,
+            change: -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100)
+          };
+        }
+      });
+    });
   });
 }
-setInterval(getPrices, 5000);
+setInterval(getPrices, 15000);
 
 const Express = require('express');
 const site = Express();

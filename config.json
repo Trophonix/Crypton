@@ -7,9 +7,15 @@
         "main": [0, 204, 0],
         "error": [255, 0, 0]
     },
-    "binance": {
-        "api_key": "xxx",
-        "api_secret": "xxx"
+    "exchanges": {
+        "binance": {
+            "api_key": "xxx",
+            "api_secret": "xxx"
+        },
+        "bittrex": {
+            "api_key": "xxx",
+            "api_secret": "xxx"
+        }
     },
     "default_base": "BTC",
     "default_decimals": 8,

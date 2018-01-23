@@ -27,6 +27,7 @@
     "async": "^2.6.0",
     "discord.js": "^11.2.1",
     "express": "^4.16.2",
-    "node-binance-api": "^0.3.7"
+    "node-binance-api": "^0.3.7",
+    "node-bittrex-api": "^0.8.1"
   }
 }

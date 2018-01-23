@@ -1,21 +1,47 @@
 const RichEmbed = require('discord.js').RichEmbed;
+
 const BinanceAPI = require('node-binance-api');
+const cache = global.cache;
 
 function getPrice (currency, base, decimals) {
   if (currency === base) return 1;
   let price;
   if (base === 'USD') {
-    let btcPerUsd = BinanceAPI.cache.BTCUSDT;
+    let btcPerUsd = cache.BTCUSDT;
     if (currency === 'BTC') return parseFloat(parseFloat(btcPerUsd).toFixed()).toString();
-    price = BinanceAPI.cache[currency + 'BTC'];
+    price = cache[currency + 'BTC'];
     if (!price) return null;
     price *= btcPerUsd;
     return parseFloat(price).toFixed(decimals);
   } else {
-    price = BinanceAPI.cache[currency + base];
+    price = cache[currency + base];
     if (!price) return null;
   }
   return parseFloat(parseFloat(price).toFixed(decimals)).toString();
+}
+
+function getData (currency, base, callback) {
+  let data = cache[currency + base];
+  if (data.volume) {
+    callback(data);
+  } else {
+    BinanceAPI.candlesticks(currency + base, '1d', (ticks, symbol) => {
+      if (ticks) {
+        let tick = ticks[ticks.length - 1];
+        if (tick) {
+          data.high = parseFloat(tick[2]);
+          data.low = parseFloat(tick[3]);
+          data.volume = parseFloat(tick[5]);
+        }
+      }
+      BinanceAPI.prevDay(currency + (currency === 'BTC' ? 'USDT' : 'BTC'), (prevDay, symbol) => {
+        if (prevDay) {
+          data.change = parseFloat(parseFloat(prevDay.priceChangePercent).toFixed(2));
+        }
+        callback(data);
+      });
+    });
+  }
 }
 
 function handleError (err, tempMessage) {
@@ -71,22 +97,19 @@ module.exports = (bot, config) => {
             embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
           }
         });
-        BinanceAPI.candlesticks(currency + defaultBase, '1d', (ticks, symbol) => {
-          let tick = ticks[ticks.length - 1];
-          if (tick) {
-            embed.addField('24hr High', `${parseFloat(tick[2]).toString()} (${defaultBase})`)
-              .addField('24hr Low', `${parseFloat(tick[3]).toString()} (${defaultBase})`)
-              .addField('24hr Volume', `${parseFloat(tick[5]).toString()} (${defaultBase})`);
+        
+        getData(currency, defaultBase, data => {
+          if (data.volume) {
+            embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
+              .addField('24hr Low', `${data.low.toString()} (${defaultBase})`)
+              .addField('24hr Volume', `${data.volume.toString()} (${defaultBase})`);
           }
-          BinanceAPI.prevDay(currency + (currency === 'BTC' ? 'USDT' : 'BTC'), (prevDay, symbol) => {
-            if (prevDay) {
-              let percent = parseFloat(parseFloat(prevDay.priceChangePercent).toFixed(2)).toString();
-              if (prevDay.priceChangePercent) embed.addField('24hr Change', `${percent}% ${prevDay.priceChangePercent > 0 ? '📈 ⤴' : '📉 ⤵' }`);
-            }
-            embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
-              .setTimestamp();
-            tempMessage.edit({embed}).catch(err => handleError(err, tempMessage));
-          });
+          if (data.change) {
+            embed.addField('24hr Change', `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`);
+          }
+          embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
+            .setTimestamp();
+          tempMessage.edit({embed}).catch(err => handleError(err, tempMessage));
         });
       }).catch(console.error);
     }
