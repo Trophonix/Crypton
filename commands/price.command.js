@@ -31,7 +31,16 @@ function getPrice (currency, base, decimals) {
     price = getMarketPrice(currency, base);
     if (price == null) return null;
   }
-  return parseFloat(parseFloat(price).toFixed(decimals)).toString();
+  let step1 = parseFloat(price);
+  console.log(step1);
+  let step2 = step1.toFixed(decimals);
+  console.log(step2);
+  let step3 = parseFloat(step2);
+  console.log(step3);
+  let step4 = step3.toString();
+  console.log(step4);
+  return step4;
+  // return parseFloat(parseFloat(price).toFixed(decimals)).toString();
 }
 
 function getData (currency, base, callback) {
