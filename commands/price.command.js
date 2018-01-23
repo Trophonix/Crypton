@@ -3,18 +3,26 @@ const RichEmbed = require('discord.js').RichEmbed;
 const BinanceAPI = require('node-binance-api');
 const cache = global.cache;
 
+function getMarketPrice (currency, base) {
+  Object.keys(cache).forEach(market => {
+    if (market === (currency + base).toUpperCase()) {
+      return cache[market].price;
+    }
+  });
+}
+
 function getPrice (currency, base, decimals) {
   if (currency === base) return 1;
   let price;
   if (base === 'USD') {
-    let btcPerUsd = cache.BTCUSDT;
+    let btcPerUsd = getMarketPrice('btc', 'usdt');
     if (currency === 'BTC') return parseFloat(parseFloat(btcPerUsd).toFixed()).toString();
-    price = cache[currency + 'BTC'];
+    price = getMarketPrice(currency, 'btc');
     if (!price) return null;
     price *= btcPerUsd;
     return parseFloat(price).toFixed(decimals);
   } else {
-    price = cache[currency + base];
+    price = getMarketPrice(currency, base);
     if (!price) return null;
   }
   return parseFloat(parseFloat(price).toFixed(decimals)).toString();
@@ -97,7 +105,7 @@ module.exports = (bot, config) => {
             embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
           }
         });
-        
+
         getData(currency, defaultBase, data => {
           if (data.volume) {
             embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
