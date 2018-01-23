@@ -7,10 +7,10 @@ function getMarketPrice (currency, base) {
   Object.keys(cache).forEach(market => {
     if (market === (currency + base).toUpperCase()) {
       let price = cache[market].price;
-      console.log(market + ' = ' + price);
       if (typeof price === 'number') {
         price = price.toString();
       }
+      console.log(market + ' = ' + price);
       return price;
     }
   });
@@ -29,6 +29,7 @@ function getPrice (currency, base, decimals) {
     return parseFloat(price).toFixed(decimals);
   } else {
     price = getMarketPrice(currency, base);
+    console.log(price);
     if (price == null) return null;
   }
   let step1 = parseFloat(price);
