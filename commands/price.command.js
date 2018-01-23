@@ -6,8 +6,11 @@ const cache = global.cache;
 function getMarketPrice (currency, base) {
   Object.keys(cache).forEach(market => {
     if (market === (currency + base).toUpperCase()) {
-      console.log(market);
-      return cache[market].price;
+      let price = cache[market].price;
+      if (typeof price === 'number') {
+        price = price.toString();
+      }
+      return price;
     }
   });
   return null;

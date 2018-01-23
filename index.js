@@ -43,10 +43,6 @@ function getPrices () {
             change: -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100)
           };
         }
-        Object.keys(global.cache).forEach(market => {
-          console.log(market + ': ');
-          console.log(global.cache[market]);
-        });
       });
     });
   });
