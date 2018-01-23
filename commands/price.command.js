@@ -109,6 +109,7 @@ module.exports = (bot, config) => {
           .addField(currency + '/' + defaultBase, price);
         Object.keys(config.other_base_displays || {}).forEach(base => {
           let baseUpper = base.toUpperCase();
+          if (baseUpper === 'USDT') baseUpper = 'USD';
           if (baseUpper !== defaultBase) {
             embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
           }
