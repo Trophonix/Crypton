@@ -25,7 +25,7 @@ function getPrices () {
     BittrexAPI.getmarketsummaries((data, err) => {
       if (err) return console.error(err);
       data.result.forEach(marketData => {
-        let market = marketData.MarketName.replace('-', '');
+        let market = marketData.MarketName.replace('-', '').toUpperCase();
         let existing = global.cache[market];
         if (existing) {
           existing.price += marketData.Last;

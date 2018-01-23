@@ -9,6 +9,7 @@ function getMarketPrice (currency, base) {
       return cache[market].price;
     }
   });
+  return null;
 }
 
 function getPrice (currency, base, decimals) {
