@@ -24,12 +24,12 @@ function getPrice (currency, base, decimals) {
     let btcPerUsd = getMarketPrice('btc', 'usdt');
     if (currency === 'BTC') return parseFloat(parseFloat(btcPerUsd).toFixed()).toString();
     price = getMarketPrice(currency, 'btc');
-    if (!price) return null;
+    if (price == null) return null;
     price *= btcPerUsd;
     return parseFloat(price).toFixed(decimals);
   } else {
     price = getMarketPrice(currency, base);
-    if (!price) return null;
+    if (price == null) return null;
   }
   return parseFloat(parseFloat(price).toFixed(decimals)).toString();
 }
@@ -86,7 +86,7 @@ module.exports = (bot, config) => {
 
       let price = getPrice(currency, defaultBase, config.default_decimals);
 
-      if (!price) {
+      if (price == null) {
         let embed = new RichEmbed()
           .setColor(config.colors.error)
           .setTitle("Unknown market. Make sure you're using abbreviations (e.g. BTC not Bitcoin)")
