@@ -60,11 +60,6 @@ function getData (currency, base, callback) {
   }
 }
 
-function handleError (err, tempMessage) {
-  tempMessage.delete();
-  console.error(err);
-}
-
 module.exports = (bot, config) => {
   return {
     aliases: ['price'],
@@ -98,23 +93,20 @@ module.exports = (bot, config) => {
         return;
       }
 
-      let temp = new RichEmbed()
+      let embed = new RichEmbed()
         .setColor(config.colors.main)
-        .setTitle('Please wait.')
-        .setDescription('Gathering data... <a:loading:401678813605527552>')
-        .setTimestamp();
-      channel.send({embed: temp}).then(tempMessage => {
-        let embed = new RichEmbed()
-          .setColor(config.colors.main)
-          .addField(currency + '/' + defaultBase, price);
-        Object.keys(config.other_base_displays || {}).forEach(base => {
-          let baseUpper = base.toUpperCase();
-          if (baseUpper === 'USDT') baseUpper = 'USD';
-          if (baseUpper !== defaultBase) {
-            embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
-          }
-        });
+        .addField(currency + '/' + defaultBase, price);
+      Object.keys(config.other_base_displays || {}).forEach(base => {
+        let baseUpper = base.toUpperCase();
+        if (baseUpper === 'USDT') baseUpper = 'USD';
+        if (baseUpper !== defaultBase) {
+          embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
+        }
+      });
+      embed.addField('Please wait', 'Attempting to load more data... <a:loading:401678813605527552>');
 
+      channel.send({embed}).then(message => {
+        embed.fields.splice(embed.fields.length - 1, 1);
         getData(currency, defaultBase, data => {
           if (defaultBase === 'USDT') defaultBase = 'USD';
           if (data.volume) {
@@ -127,9 +119,9 @@ module.exports = (bot, config) => {
           }
           embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
             .setTimestamp();
-          tempMessage.edit({embed}).catch(err => handleError(err, tempMessage));
+          message.edit({embed}).catch(console.error);
         });
-      }).catch(console.error);
+      });
     }
   };
 };
