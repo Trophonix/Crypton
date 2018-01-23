@@ -115,6 +115,7 @@ module.exports = (bot, config) => {
         });
 
         getData(currency, defaultBase, data => {
+          if (defaultBase === 'USDT') defaultBase = 'USD';
           if (data.volume) {
             embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
               .addField('24hr Low', `${data.low.toString()} (${defaultBase})`)
