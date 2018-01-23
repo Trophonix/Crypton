@@ -8,12 +8,12 @@ function getPrice (currency, base, decimals) {
     let btcPerUsd = BinanceAPI.cache.BTCUSDT;
     if (currency === 'BTC') return parseFloat(parseFloat(btcPerUsd).toFixed()).toString();
     price = BinanceAPI.cache[currency + 'BTC'];
-    if (price === null) return null;
+    if (price == null) return null;
     price *= btcPerUsd;
     return parseFloat(price).toFixed(decimals);
   } else {
     price = BinanceAPI.cache[currency + base];
-    if (price === null) return null;
+    if (price == null) return null;
   }
   return parseFloat(parseFloat(price).toFixed(decimals)).toString();
 }
@@ -46,7 +46,7 @@ module.exports = (bot, config) => {
 
       let price = getPrice(currency, defaultBase, config.default_decimals);
 
-      if (price === null) {
+      if (price == null) {
         let embed = new RichEmbed()
           .setColor(config.colors.error)
           .setTitle("Unknown market. Make sure you're using abbreviations (e.g. BTC not Bitcoin)")
