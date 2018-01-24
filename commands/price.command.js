@@ -102,7 +102,10 @@ module.exports = (bot, config) => {
         let baseUpper = base.toUpperCase();
         if (baseUpper === 'USDT') baseUpper = 'USD';
         if (baseUpper !== defaultBase) {
-          embed.addField(currency.toUpperCase() + '/' + baseUpper, getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals));
+          let otherPrice = getPrice(currency, baseUpper, config.other_base_displays[base] || config.default_decimals);
+          if (otherPrice != null) {
+            embed.addField(currency.toUpperCase() + '/' + baseUpper, otherPrice);
+          }
         }
       });
       embed.addField('Please wait', 'Attempting to load more data... <a:loading:401678813605527552>');
