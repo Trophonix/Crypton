@@ -32,11 +32,11 @@ function getPrice (currency, base, decimals) {
     if (price == null) return null;
     price = parseFloat(price);
   }
-  let finalPrice = parseFloat(parseFloat(price).toFixed(decimals)).toString();
+  let finalPrice = parseFloat(parseFloat(price).toFixed(decimals));
   if (isNaN(finalPrice)) {
     return null;
   }
-  return finalPrice;
+  return finalPrice.toString();
 }
 
 function getData (currency, base, callback) {
