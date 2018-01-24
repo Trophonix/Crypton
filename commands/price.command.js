@@ -29,9 +29,10 @@ function getPrice (currency, base, decimals) {
     price *= btcPerUsd;
   } else {
     price = getMarketPrice(currency, base);
-    console.log(price);
     if (price == null) return null;
   }
+  console.log(price);
+  console.log(typeof price);
   return parseFloat(parseFloat(price).toFixed(decimals)).toString();
 }
 
