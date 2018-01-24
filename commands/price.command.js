@@ -39,6 +39,9 @@ function getPrice (currency, base, decimals) {
 function getData (currency, base, callback) {
   let data = cache[currency + base];
   if (data.volume) {
+    if (data.change) {
+      data.change = parseFloat(parseFloat(data.change).toFixed(2));
+    }
     callback(data);
   } else {
     BinanceAPI.candlesticks(currency + base, '1d', (ticks, symbol) => {
