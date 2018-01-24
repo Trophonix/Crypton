@@ -24,11 +24,14 @@ function getPrice (currency, base, decimals) {
   if (base === 'USD') {
     let btcPerUsd = getMarketPrice('btc', 'usdt');
     if (currency === 'BTC') return parseFloat(parseFloat(btcPerUsd).toFixed()).toString();
-    price = getMarketPrice(currency, 'btc');
+    price = parseFloat(getMarketPrice(currency, 'btc'));
     console.log(price);
     console.log(typeof price);
     if (price == null) return null;
     price *= btcPerUsd;
+    console.log(price);
+    console.log(typeof price);
+    price = price.toString();
     console.log(price);
     console.log(typeof price);
   } else {
