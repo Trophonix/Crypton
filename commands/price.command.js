@@ -23,7 +23,7 @@ function getPrice (currency, base, decimals) {
   let price;
   if (base === 'USD') {
     let btcPerUsd = parseFloat(getMarketPrice('btc', 'usdt'));
-    if (currency === 'BTC') return parseFloat(btcPerUsd.toFixed()).toString();
+    if (currency === 'BTC') return parseFloat(btcPerUsd.toFixed(8)).toString();
     price = parseFloat(getMarketPrice(currency, 'btc'));
     if (price == null) return null;
     price *= btcPerUsd;
