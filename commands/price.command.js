@@ -42,7 +42,7 @@ function getData (currency, base, callback) {
   let data = global.cache[currency + base];
   if (data.volume) {
     if (data.change) {
-      data.change = parseFloat(parseFloat(data.change).toFixed(2));
+      data.change = parseFloat(data.change.toFixed(2));
     }
     callback(data);
   } else {
