@@ -33,9 +33,6 @@ function getPrice (currency, base, decimals) {
     price = parseFloat(price);
   }
   let finalPrice = parseFloat(parseFloat(price).toFixed(decimals));
-  if (isNaN(finalPrice)) {
-    return null;
-  }
   return finalPrice.toString();
 }
 
