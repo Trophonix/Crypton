@@ -42,6 +42,7 @@ function getPrice (currency, base, decimals) {
 
 function getData (currency, base, callback) {
   let data = cache[currency + base];
+  if (!data) return null;
   if (data.volume) {
     if (data.change) {
       data.change = parseFloat(data.change.toFixed(2));
