@@ -48,7 +48,7 @@ function getPrices () {
     });
   });
 }
-setInterval(getPrices, 15000);
+setInterval(getPrices, 60 * 1000);
 
 const Express = require('express');
 const site = Express();
