@@ -23,9 +23,9 @@ function getPrice (currency, base, decimals) {
   if (currency === base) return 1;
   let price;
   if (base === 'USD') {
-    let btcPerUsd = parseFloat(getMarketPrice('btc', 'usdt'));
+    let btcPerUsd = parseFloat(getMarketPrice('BTC', 'USDT'));
     if (currency === 'BTC') return parseFloat(btcPerUsd.toFixed(8)).toString();
-    price = parseFloat(getMarketPrice(currency, 'btc'));
+    price = parseFloat(getMarketPrice(currency, 'BTC'));
     if (price == null) return null;
     price *= btcPerUsd;
   } else {
@@ -87,6 +87,7 @@ module.exports = (bot, config) => {
 
       let currency = args[0].toUpperCase();
       let defaultBase = currency === 'BTC' ? 'USDT' : (args[1] || config.default_base).toUpperCase() || 'BTC';
+      if (defaultBase === 'USDT') defaultBase = 'USD';
 
       let price = getPrice(currency, defaultBase, config.default_decimals);
 
