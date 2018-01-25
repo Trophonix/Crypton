@@ -1,13 +1,12 @@
 const RichEmbed = require('discord.js').RichEmbed;
 
 const BinanceAPI = require('node-binance-api');
-const cache = global.cache;
 
 function getMarketPrice (currency, base) {
   let price;
-  Object.keys(cache).some(market => {
+  Object.keys(global.global.cache).some(market => {
     if (market === (currency + base).toUpperCase()) {
-      price = cache[market].price;
+      price = global.cache[market].price;
       if (typeof price === 'number') {
         price = price.toString();
       }
@@ -40,7 +39,7 @@ function getPrice (currency, base, decimals) {
 }
 
 function getData (currency, base, callback) {
-  let data = cache[currency + base];
+  let data = global.cache[currency + base];
   if (data.volume) {
     if (data.change) {
       data.change = parseFloat(parseFloat(data.change).toFixed(2));
