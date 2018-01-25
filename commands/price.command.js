@@ -41,7 +41,7 @@ function getPrice (currency, base, decimals) {
 }
 
 function getData (currency, base, callback) {
-  let data = cache[currency + base];
+  let data = cache[currency + (base === 'USD' ? 'USDT' : base)];
   if (!data) return null;
   if (data.volume) {
     if (data.change) {
