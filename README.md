@@ -6,7 +6,7 @@ Crypton is a [Discord](https://discordapp.com) bot for fetching and displaying p
 
 # Add to YOUR Server
 
-[Click here](http://crypton.fun/add) to add Crypton to your Discord server!
+[Click here](https://crypton.fun/add) to add Crypton to your Discord server!
 
 # How to Contribute
 
