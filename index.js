@@ -12,12 +12,12 @@ config.exchanges.bittrex.apisecret = config.exchanges.bittrex.api_secret;
 const BittrexAPI = require('node-bittrex-api');
 BittrexAPI.options(config.exchanges.bittrex);
 
-global.crypton_cache = {};
+const cache = require('./cache');
 
 function getPrices () {
   BinanceAPI.prices(ticker => {
     Object.keys(ticker).forEach(market => {
-      global.crypton_cache[market] = {
+      cache[market] = {
         price: ticker[market]
       };
     });
@@ -35,7 +35,7 @@ function getPrices () {
             }
           }
         });
-        let existing = global.crypton_cache[market];
+        let existing = cache[market];
         if (existing) {
           existing.price = (existing.price + marketData.Last) / 2;
           existing.volume = marketData.Volume;
@@ -43,7 +43,7 @@ function getPrices () {
           existing.low = marketData.Low;
           existing.change = -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100);
         } else {
-          global.crypton_cache[market] = {
+          cache[market] = {
             price: marketData.Last,
             volume: marketData.Volume,
             high: marketData.High,
