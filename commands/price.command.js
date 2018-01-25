@@ -4,7 +4,7 @@ const BinanceAPI = require('node-binance-api');
 
 function getMarketPrice (currency, base) {
   let price;
-  Object.keys(global.global.cache).some(market => {
+  Object.keys(global.cache).some(market => {
     if (market === (currency + base).toUpperCase()) {
       price = global.cache[market].price;
       if (typeof price === 'number') {
