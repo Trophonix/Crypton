@@ -7,7 +7,7 @@ const cache = require('../cache');
 function getMarketPrice (currency, base) {
   let price;
   Object.keys(cache).some(market => {
-    if (market === (currency + base).toUpperCase()) {
+    if (market === (currency + base).toUpperCase() || market === (base + currency).toUpperCase()) {
       price = cache[market].price;
       if (typeof price === 'number') {
         price = price.toString();
