@@ -21,30 +21,30 @@ function getPrices () {
         price: ticker[market]
       };
     });
-    BittrexAPI.getmarketsummaries((data, err) => {
-      if (err) return console.error(err);
-      data.result.forEach(marketData => {
-        let split = marketData.MarketName.split('-');
-        let market = (split[1] + split[0]).toUpperCase();
-        let existing = global.cache[market];
-        if (existing) {
-          existing.price += marketData.Last;
-          existing.price /= 2;
-          existing.volume = marketData.Volume;
-          existing.high = marketData.High;
-          existing.low = marketData.Low;
-          existing.change = -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100);
-        } else {
-          global.cache[market] = {
-            price: marketData.Last,
-            volume: marketData.Volume,
-            high: marketData.High,
-            low: marketData.Low,
-            change: -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100)
-          };
-        }
-      });
-    });
+    // BittrexAPI.getmarketsummaries((data, err) => {
+    //   if (err) return console.error(err);
+    //   data.result.forEach(marketData => {
+    //     let split = marketData.MarketName.split('-');
+    //     let market = (split[1] + split[0]).toUpperCase();
+    //     let existing = global.cache[market];
+    //     if (existing) {
+    //       existing.price += marketData.Last;
+    //       existing.price /= 2;
+    //       existing.volume = marketData.Volume;
+    //       existing.high = marketData.High;
+    //       existing.low = marketData.Low;
+    //       existing.change = -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100);
+    //     } else {
+    //       global.cache[market] = {
+    //         price: marketData.Last,
+    //         volume: marketData.Volume,
+    //         high: marketData.High,
+    //         low: marketData.Low,
+    //         change: -(((marketData.PrevDay - marketData.Last) / marketData.PrevDay) * 100)
+    //       };
+    //     }
+    //   });
+    // });
   });
 }
 getPrices();
