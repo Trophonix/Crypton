@@ -123,9 +123,9 @@ module.exports = (bot, config) => {
           if (defaultBase === 'USDT') defaultBase = 'USD';
           if (data) {
             if (data.volume) {
-              embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
-                .addField('24hr Low', `${data.low.toString()} (${defaultBase})`)
-                .addField('24hr Volume', `${data.volume.toString()} (${defaultBase})`);
+              embed.addField('24hr High', `${data.high.toString()} ${defaultBase}`)
+                .addField('24hr Low', `${data.low.toString()} ${defaultBase}`)
+                .addField('24hr Volume', `${data.volume.toString()} ${currency}`);
             }
             if (data.change) {
               embed.addField('24hr Change', `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`);
