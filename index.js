@@ -13,7 +13,6 @@ const BittrexAPI = require('node-bittrex-api');
 BittrexAPI.options(config.exchanges.bittrex);
 
 global.cache = {};
-getPrices();
 
 function getPrices () {
   BinanceAPI.prices(ticker => {
@@ -48,6 +47,7 @@ function getPrices () {
     });
   });
 }
+getPrices();
 setInterval(getPrices, 60 * 1000);
 
 const Express = require('express');
