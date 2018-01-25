@@ -4,9 +4,9 @@ const BinanceAPI = require('node-binance-api');
 
 function getMarketPrice (currency, base) {
   let price;
-  Object.keys(global.cache).some(market => {
+  Object.keys(global.crypton_cache).some(market => {
     if (market === (currency + base).toUpperCase()) {
-      price = global.cache[market].price;
+      price = global.crypton_cache[market].price;
       if (typeof price === 'number') {
         price = price.toString();
       }
@@ -39,7 +39,7 @@ function getPrice (currency, base, decimals) {
 }
 
 function getData (currency, base, callback) {
-  let data = global.cache[currency + base];
+  let data = global.crypton_cache[currency + base];
   if (data.volume) {
     if (data.change) {
       data.change = parseFloat(data.change.toFixed(2));
