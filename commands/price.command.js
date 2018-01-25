@@ -120,13 +120,15 @@ module.exports = (bot, config) => {
         embed.fields.splice(embed.fields.length - 1, 1);
         getData(currency, defaultBase, data => {
           if (defaultBase === 'USDT') defaultBase = 'USD';
-          if (data.volume) {
-            embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
-              .addField('24hr Low', `${data.low.toString()} (${defaultBase})`)
-              .addField('24hr Volume', `${data.volume.toString()} (${defaultBase})`);
-          }
-          if (data.change) {
-            embed.addField('24hr Change', `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`);
+          if (data) {
+            if (data.volume) {
+              embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
+                .addField('24hr Low', `${data.low.toString()} (${defaultBase})`)
+                .addField('24hr Volume', `${data.volume.toString()} (${defaultBase})`);
+            }
+            if (data.change) {
+              embed.addField('24hr Change', `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`);
+            }
           }
           embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
             .setTimestamp();
