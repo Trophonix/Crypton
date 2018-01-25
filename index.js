@@ -37,8 +37,7 @@ function getPrices () {
         });
         let existing = global.cache[market];
         if (existing) {
-          existing.price = existing.price + marketData.Last;
-          existing.price /= 2;
+          existing.price = (existing.price + marketData.Last) / 2;
           existing.volume = marketData.Volume;
           existing.high = marketData.High;
           existing.low = marketData.Low;
