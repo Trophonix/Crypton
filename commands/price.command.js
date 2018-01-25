@@ -30,9 +30,9 @@ function getPrice (currency, base, decimals) {
   } else {
     price = getMarketPrice(currency, base);
     if (price == null) return null;
-    // price = parseFloat(price);
+    price = parseFloat(price);
   }
-  let finalPrice = parseFloat(parseFloat(price).toFixed(decimals));
+  let finalPrice = parseFloat(price.toFixed(decimals));
   if (isNaN(finalPrice)) {
     return null;
   }
