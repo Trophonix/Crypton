@@ -16,9 +16,8 @@ const cache = require('./cache');
 
 function getPrices () {
   BinanceAPI.prevDay(null, tickers => {
-    Object.keys(tickers).forEach(market => {
-      let data = tickers[market];
-      cache[market] = {
+    tickers.forEach(market => {
+      cache[market.symbol] = {
         price: data.prevClosePrice,
         volume: data.volume,
         high: data.highPrice,
