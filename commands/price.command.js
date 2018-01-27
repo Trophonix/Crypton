@@ -41,7 +41,8 @@ function getPrice (currency, base, decimals) {
 }
 
 function getData (currency, base, callback) {
-  let data = cache[currency + base];
+  let data = cache[currency + (base === 'USD' ? 'USDT' : base)];
+  if (!data) return null;
   if (data.volume) {
     if (data.change) {
       data.change = parseFloat(data.change.toFixed(2));
@@ -120,13 +121,15 @@ module.exports = (bot, config) => {
         embed.fields.splice(embed.fields.length - 1, 1);
         getData(currency, defaultBase, data => {
           if (defaultBase === 'USDT') defaultBase = 'USD';
-          if (data.volume) {
-            embed.addField('24hr High', `${data.high.toString()} (${defaultBase})`)
-              .addField('24hr Low', `${data.low.toString()} (${defaultBase})`)
-              .addField('24hr Volume', `${data.volume.toString()} (${defaultBase})`);
-          }
-          if (data.change) {
-            embed.addField('24hr Change', `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`);
+          if (data) {
+            if (data.volume) {
+              embed.addField('24hr High', `${data.high.toString()} ${defaultBase}`)
+                .addField('24hr Low', `${data.low.toString()} ${defaultBase}`)
+                .addField('24hr Volume', `${data.volume.toString()} ${currency}`);
+            }
+            if (data.change) {
+              embed.addField('24hr Change', `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`);
+            }
           }
           embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
             .setTimestamp();
