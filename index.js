@@ -22,7 +22,7 @@ function getPrices () {
         if (typeof value === 'string') {
           let float = parseFloat(value);
           if (float != null && !isNaN(float)) {
-            marketData[key] = float;
+            data[key] = float;
           }
         }
       });
