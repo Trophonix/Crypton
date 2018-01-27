@@ -15,10 +15,15 @@ BittrexAPI.options(config.exchanges.bittrex);
 const cache = require('./cache');
 
 function getPrices () {
-  BinanceAPI.prices(ticker => {
-    Object.keys(ticker).forEach(market => {
+  BinanceAPI.prevDay(null, tickers => {
+    Object.keys(tickers).forEach(market => {
+      let data = tickers[market];
       cache[market] = {
-        price: ticker[market]
+        price: data.prevClosePrice,
+        volume: data.volume,
+        high: data.highPrice,
+        low: data.lowPrice,
+        change: data.priceChangePercent
       };
     });
     BittrexAPI.getmarketsummaries((data, err) => {
