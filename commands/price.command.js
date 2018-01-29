@@ -1,8 +1,8 @@
-const RichEmbed = require("discord.js").RichEmbed;
+const RichEmbed = require('discord.js').RichEmbed;
 
-const BinanceAPI = require("node-binance-api");
+const BinanceAPI = require('node-binance-api');
 
-const cache = require("../cache");
+const cache = require('../cache');
 
 function getMarketPrice(currency, base) {
   let price;
@@ -12,7 +12,7 @@ function getMarketPrice(currency, base) {
       market === (base + currency).toUpperCase()
     ) {
       price = cache[market].price;
-      if (typeof price === "number") {
+      if (typeof price === 'number') {
         price = price.toString();
       }
       return true;
@@ -25,10 +25,10 @@ function getMarketPrice(currency, base) {
 function getPrice(currency, base, decimals) {
   if (currency === base) return 1;
   let price;
-  if (base === "USD") {
-    let btcPerUsd = parseFloat(getMarketPrice("BTC", "USDT"));
-    if (currency === "BTC") return parseFloat(btcPerUsd.toFixed(8)).toString();
-    price = parseFloat(getMarketPrice(currency, "BTC"));
+  if (base === 'USD') {
+    let btcPerUsd = parseFloat(getMarketPrice('BTC', 'USDT'));
+    if (currency === 'BTC') return parseFloat(btcPerUsd.toFixed(8)).toString();
+    price = parseFloat(getMarketPrice(currency, 'BTC'));
     if (price == null) return null;
     price *= btcPerUsd;
   } else {
@@ -44,7 +44,7 @@ function getPrice(currency, base, decimals) {
 }
 
 function getData(currency, base, callback) {
-  let data = cache[currency + (base === "USD" ? "USDT" : base)];
+  let data = cache[currency + (base === 'USD' ? 'USDT' : base)];
   if (!data) return null;
   if (data.volume) {
     if (data.change) {
@@ -52,7 +52,7 @@ function getData(currency, base, callback) {
     }
     callback(data);
   } else {
-    BinanceAPI.candlesticks(currency + base, "1d", (ticks, symbol) => {
+    BinanceAPI.candlesticks(currency + base, '1d', (ticks, symbol) => {
       if (ticks) {
         let tick = ticks[ticks.length - 1];
         if (tick) {
@@ -62,7 +62,7 @@ function getData(currency, base, callback) {
         }
       }
       BinanceAPI.prevDay(
-        currency + (currency === "BTC" ? "USDT" : "BTC"),
+        currency + (currency === 'BTC' ? 'USDT' : 'BTC'),
         (prevDay, symbol) => {
           if (prevDay) {
             data.change = parseFloat(
@@ -78,22 +78,22 @@ function getData(currency, base, callback) {
 
 module.exports = (bot, config) => {
   return {
-    aliases: ["price"],
-    usage: "price (currency) (base [BTC])",
+    aliases: ['price'],
+    usage: 'price (currency) (base [BTC])',
     description:
-      "Display price of (currency) in relation to (base) along with other data.",
+      'Display price of (currency) in relation to (base) along with other data.',
     onCommand: (event, member, channel, args) => {
       if (args.length === 0) {
         let embed = new RichEmbed()
           .setColor(config.colors.error)
-          .setTitle("Incorrect usage!")
+          .setTitle('Incorrect usage!')
           .addField(
-            "Syntax",
+            'Syntax',
             `${config.prefix}price (currency) (base default: BTC)`
           )
-          .addField("Example", `${config.prefix}price xrp eth`)
+          .addField('Example', `${config.prefix}price xrp eth`)
           .setAuthor(
-            "Requested by " + member.displayName,
+            'Requested by ' + member.displayName,
             event.author.avatarURL
           )
           .setTimestamp();
@@ -103,10 +103,10 @@ module.exports = (bot, config) => {
 
       let currency = args[0].toUpperCase();
       let defaultBase =
-        currency === "BTC"
-          ? "USDT"
-          : (args[1] || config.default_base).toUpperCase() || "BTC";
-      if (defaultBase === "USDT") defaultBase = "USD";
+        currency === 'BTC'
+          ? 'USDT'
+          : (args[1] || config.default_base).toUpperCase() || 'BTC';
+      if (defaultBase === 'USDT') defaultBase = 'USD';
 
       let price = getPrice(currency, defaultBase, config.default_decimals);
 
@@ -117,7 +117,7 @@ module.exports = (bot, config) => {
             "Unknown market. Make sure you're using abbreviations (e.g. BTC not Bitcoin)"
           )
           .setAuthor(
-            "Requested by " + member.displayName,
+            'Requested by ' + member.displayName,
             event.author.avatarURL
           )
           .setTimestamp();
@@ -127,10 +127,10 @@ module.exports = (bot, config) => {
 
       let embed = new RichEmbed()
         .setColor(config.colors.main)
-        .addField(currency + "/" + defaultBase, price);
+        .addField(currency + '/' + defaultBase, price);
       Object.keys(config.other_base_displays || {}).forEach(base => {
         let baseUpper = base.toUpperCase();
-        if (baseUpper === "USDT") baseUpper = "USD";
+        if (baseUpper === 'USDT') baseUpper = 'USD';
         if (baseUpper !== defaultBase) {
           let otherPrice = getPrice(
             currency,
@@ -139,41 +139,41 @@ module.exports = (bot, config) => {
           );
           if (otherPrice != null) {
             embed.addField(
-              currency.toUpperCase() + "/" + baseUpper,
+              currency.toUpperCase() + '/' + baseUpper,
               otherPrice
             );
           }
         }
       });
       embed.addField(
-        "Please wait",
-        "Attempting to load more data... <a:loading:401678813605527552>"
+        'Please wait',
+        'Attempting to load more data... <a:loading:401678813605527552>'
       );
 
       channel.send({ embed }).then(message => {
         embed.fields.splice(embed.fields.length - 1, 1);
         getData(currency, defaultBase, data => {
-          if (defaultBase === "USDT") defaultBase = "USD";
+          if (defaultBase === 'USDT') defaultBase = 'USD';
           if (data) {
             if (data.volume) {
               embed
-                .addField("24hr High", `${data.high.toString()} ${defaultBase}`)
-                .addField("24hr Low", `${data.low.toString()} ${defaultBase}`)
+                .addField('24hr High', `${data.high.toString()} ${defaultBase}`)
+                .addField('24hr Low', `${data.low.toString()} ${defaultBase}`)
                 .addField(
-                  "24hr Volume",
+                  '24hr Volume',
                   `${data.volume.toString()} ${currency}`
                 );
             }
             if (data.change) {
               embed.addField(
-                "24hr Change",
-                `${data.change}% ${data.change > 0 ? "📈 ⤴" : "📉 ⤵"}`
+                '24hr Change',
+                `${data.change}% ${data.change > 0 ? '📈 ⤴' : '📉 ⤵'}`
               );
             }
           }
           embed
             .setAuthor(
-              "Requested by " + member.displayName,
+              'Requested by ' + member.displayName,
               event.author.avatarURL
             )
             .setTimestamp();

@@ -1,12 +1,12 @@
-const config = require("./config.json");
+const config = require('./config.json');
 
-const Files = require("fs");
+const Files = require('fs');
 
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const bot = new Discord.Client();
 
 bot.commands = [];
-Files.readdir("./commands/", (err, files) => {
+Files.readdir('./commands/', (err, files) => {
   if (err) {
     console.error(err);
     process.exit(1);
@@ -14,36 +14,36 @@ Files.readdir("./commands/", (err, files) => {
 
   files.forEach((file, index) => {
     console.log(file);
-    if (file.endsWith(".command.js"))
-      bot.commands.push(require("./commands/" + file)(bot, config));
+    if (file.endsWith('.command.js'))
+      bot.commands.push(require('./commands/' + file)(bot, config));
   });
 });
 
 function updatePresence() {
   let guilds = bot.guilds ? bot.guilds.array().length : 0;
   bot.user.setPresence({
-    status: "online",
+    status: 'online',
     game: {
-      name: `in ${guilds} guild${guilds === 1 ? "" : "s"} | ${
+      name: `in ${guilds} guild${guilds === 1 ? '' : 's'} | ${
         config.prefix
       }help`
     }
   });
 }
 
-bot.on("ready", () => {
+bot.on('ready', () => {
   updatePresence();
-  console.log("Connected to discord.");
+  console.log('Connected to discord.');
 });
 
-bot.on("guildCreate", guild => updatePresence());
-bot.on("guildDelete", guild => updatePresence());
+bot.on('guildCreate', guild => updatePresence());
+bot.on('guildDelete', guild => updatePresence());
 
-bot.on("message", event => {
+bot.on('message', event => {
   let message = event.content.toLowerCase();
   if (message.startsWith(config.prefix)) {
-    message = message.replace(config.prefix, "");
-    let args = message.split(" ");
+    message = message.replace(config.prefix, '');
+    let args = message.split(' ');
     let cmd = args[0];
     args.splice(0, 1);
     if (event && event.guild) {
@@ -57,7 +57,7 @@ bot.on("message", event => {
                   event.author.username
                 }#${event.author.discriminator}: ${
                   config.prefix
-                }${cmd} ${args.join(" ")}`
+                }${cmd} ${args.join(' ')}`
               );
               command.onCommand(event, member, event.channel, args);
             }
