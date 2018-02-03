@@ -1,6 +1,6 @@
 const request = require('request');
 
-var blockIO = module.exports = (config) => {
+module.exports = (config) => {
   var API_KEY = config.block_io.API_KEY;
   var url = 'https://block.io/api/v2?api_key=' + API_KEY;
 
@@ -24,5 +24,6 @@ var blockIO = module.exports = (config) => {
       callback(res);
     });
   }
-  return blockIO;
+
+  return this;
 }
