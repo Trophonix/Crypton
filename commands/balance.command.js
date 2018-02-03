@@ -4,34 +4,52 @@ const cache = require('../cache');
 module.exports = (bot, config) => {
   const block_io = require('block_io');
   const BlockIO = new block_io(config.block_io.API_KEY, config.block_io.SECRET, 2);
+
+  async function getWallet(user) {
+    return new Promise(resolve => {
+      BlockIO.get_address_balance({label: event.author.id}, res => {
+        if (res.status === 'success' && res.data) {
+          resolve(res.data);
+        } else {
+          BlockIO.get_new_address({label: user.id}, res => {
+            BlockIO.get_address_balance({label: event.author.id}, res => {
+              resolve(res.data);
+            });
+          });
+        }
+      });
+    });
+  }
+
   return {
     aliases: ['balance', 'bal'],
     usage: 'balance',
     description: 'View your balance',
+    allowDM: true,
     onCommand: (event, member, channel, args) => {
-      BlockIO.get_address_balance({'label': member.id}, res => {
-        if (res.status === 'success' && res.data) {
-          let embed = new RichEmbed()
-            .setColor(config.colors.main)
-            .setTitle('Your balance')
-            .addField('Balance', res.data.available_balance + ' Ð');
-          let pending = res.data.pending_received_balance;
-          if (pending && parseFloat(pending) > 0) {
-            embed.addField('Pending balance', pending);
-          }
-          embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
-            .setTimestamp();
-          channel.send({embed}).catch(console.error);
-        } else {
-          let embed = new RichEmbed()
-            .setColor(config.colors.main)
-            .addField('Balance', '0.00000000 Ð')
-            .addField('Add balance', `DM me ${config.prefix}help to see how to deposit to your balance. (WIP)`)
-            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
-            .setTimestamp();
-          channel.send({embed}).catch(console.error);
+      let wallet = await getWallet(event.author);
+      if (wallet) {
+        let embed = new RichEmbed()
+          .setColor(config.colors.main)
+          .setTitle('Your balance')
+          .addField('Balance', wallet.available_balance + ' Ð');
+        let pending = wallet.pending_received_balance;
+        if (pending && parseFloat(pending) > 0) {
+          embed.addField('Pending balance', pending);
         }
-      });
+        if (member) embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL);
+        embed.setTimestamp();
+        channel.send({embed}).catch(console.error);
+      } else {
+        let embed = new RichEmbed()
+          .setColor(config.colors.error)
+          .setTitle('Something went wrong!')
+          .setDescription(
+            'Try again in a few minutes.'
+          )
+          .setTimestamp();
+        channel.send({embed});
+      }
     }
   };
 };
