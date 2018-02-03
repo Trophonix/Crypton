@@ -23,7 +23,6 @@ module.exports = (bot, config) => {
         return;
       }
       let mentions = event.mentions.users.array();
-      console.log(mentions);
       let user = mentions[0];
       if (!user) {
         let embed = new RichEmbed()
@@ -92,11 +91,21 @@ module.exports = (bot, config) => {
                       });
                     }
                   } else {
-                    throw new Error();
+                    let embed = new RichEmbed()
+                      .setColor(config.colors.error)
+                      .setTitle('Something went wrong!')
+                      .setDescription('Try again in a few minutes.')
+                      .setTimestamp();
+                    channel.send({ embed });
                   }
                 });
               } else {
-                throw new Error();
+                let embed = new RichEmbed()
+                  .setColor(config.colors.error)
+                  .setTitle('Something went wrong!')
+                  .setDescription('Try again in a few minutes.')
+                  .setTimestamp();
+                channel.send({ embed });
               }
             });
           } else {
