@@ -3,17 +3,16 @@ const cache = require('../cache');
 
 module.exports = (bot, config) => {
   var BlockIO = require('../block_io');
-  console.log(BlockIO);
 
   function getWallet(user, callback) {
-    BlockIO.getWalletBalance({label: user.id}, res => {
+    BlockIO.getWalletBalance(user.id, res => {
       console.log(res);
       if (res && res.status === 'success' && res.data) {
         callback(res.data);
       } else {
-        BlockIO.createWallet({label: user.id}, _res => {
+        BlockIO.createWallet(user.id, _res => {
           console.log(_res);
-          BlockIO.getWalletBalance({label: user.id}, res1 => {
+          BlockIO.getWalletBalance(user.id, res1 => {
             if (res1) callback(res1.data);
             else callback(null);
           });
