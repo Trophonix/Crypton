@@ -27,4 +27,4 @@ methods.getWalletBalance = (label, callback) => {
   });
 }
 
-module.exports = module;
+module.exports = methods;
