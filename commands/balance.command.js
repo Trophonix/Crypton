@@ -25,9 +25,8 @@ module.exports = (bot, config) => {
         } else {
           let embed = new RichEmbed()
             .setColor(config.colors.main)
-            .setTitle('No balance')
             .addField('Balance', '0.00000000')
-            .addField('Add balance', 'DM me $help to see how to deposit to your balance.')
+            .addField('Add balance', `DM me ${config.prefix}help to see how to deposit to your balance. (WIP)`)
             .setAuthor('Requested by ' + member.displayName, event.author.authorURL)
             .setTimestamp();
           channel.send({embed}).catch(console.error);
