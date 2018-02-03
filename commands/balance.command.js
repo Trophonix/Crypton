@@ -12,6 +12,7 @@ module.exports = (bot, config) => {
       } else {
         BlockIO.createWallet(user.id, _res => {
           BlockIO.getWalletBalance(user.id, res1 => {
+            res1 = JSON.parse(res1.replace(/\n/g, ''))
             if (res1) callback(res1.data);
             else callback(null);
           });
@@ -30,7 +31,6 @@ module.exports = (bot, config) => {
         if (wallet) {
           let embed = new RichEmbed()
             .setColor(config.colors.main)
-            .setTitle('Your balance')
             .addField('Balance', wallet.available_balance + ' Ð');
           let pending = wallet.pending_received_balance;
           if (pending && parseFloat(pending) > 0) {
