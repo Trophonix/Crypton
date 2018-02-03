@@ -18,7 +18,7 @@ module.exports = (bot, config) => {
             .addField('Balance', wallet.available_balance + 'Ð');
           let pending = wallet.pending_received_balance;
           if (pending && parseFloat(pending) > 0) {
-            embed.addField('Pending balance', pending);
+            embed.addField('Pending balance', pending + 'Ð');
           }
           embed.addField('Address', wallet.address);
           if (member)
