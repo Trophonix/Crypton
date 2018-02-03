@@ -43,8 +43,7 @@ module.exports = (bot, config) => {
       if (!amount || isNaN(amount)) {
         let embed = new RichEmbed()
           .setColor(config.colors.error)
-          .setTitle('Invalid amount!')
-          .addField('Error', `${args[1]} is not a valid amount to send.`)
+          .addField('Invalid amount!', `${args[1]} is not a valid amount to send.`)
           .setAuthor(
             'Requested by ' + member.displayName,
             event.author.avatarURL
@@ -80,8 +79,7 @@ module.exports = (bot, config) => {
           } else {
             let embed = new RichEmbed()
               .setColor(config.colors.error)
-              .setTitle('Insufficient balance')
-              .addField('Error', `You don't have ${amount} Ð in your $balance.`)
+              .addField('Insufficient balance!', `You don't have ${amount} Ð in your $balance.`)
               .setAuthor(
                 'Requested by ' + member.displayName,
                 event.author.avatarURL
