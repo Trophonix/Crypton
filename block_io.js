@@ -1,9 +1,8 @@
 const request = require('request');
-const url = 'https://block.io/api/v2'
 
 var blockIO = module.exports = (config) => {
-  const API_KEY = config.block_io.API_KEY;
-  url += '?api_key=' + API_KEY;
+  var API_KEY = config.block_io.API_KEY;
+  var url = 'https://block.io/api/v2?api_key=' + API_KEY;
 
   var appendVariable = (reqUrl, name, value) => {
     reqUrl += '&' + name + '=' + value;
