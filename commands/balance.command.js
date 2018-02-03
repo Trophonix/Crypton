@@ -21,9 +21,16 @@ module.exports = (bot, config) => {
           }
           embed.setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
             .setTimestamp();
-          channel.send({embed});
+          channel.send({embed}).catch(console.error);
         } else {
-          // ...
+          let embed = new RichEmbed()
+            .setColor(config.colors.main)
+            .setTitle('No balance')
+            .addField('Balance', '0.00000000')
+            .addField('Add balance', 'DM me $help to see how to deposit to your balance.')
+            .setAuthor('Requested by ' + member.displayName, event.author.authorURL)
+            .setTimestamp();
+          channel.send({embed}).catch(console.error);
         }
       });
     }
