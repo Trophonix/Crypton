@@ -2,7 +2,8 @@ const RichEmbed = require('discord.js').RichEmbed;
 const cache = require('../cache');
 
 module.exports = (bot, config) => {
-  const BlockIO = require('block_io')(config.block_io.API_KEY, config.block_io.SECRET, 2);
+  const block_io = require('block_io');
+  const BlockIO = block_io(config.block_io.API_KEY, config.block_io.SECRET, 2);
   return {
     aliases: ['balance', 'bal'],
     usage: 'balance',
