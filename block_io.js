@@ -20,8 +20,8 @@ methods.createWallet = (label, callback) => {
 }
 
 methods.getWalletBalance = (label, callback) => {
-  let reqUrl = url + '/get_address_balance?api_key=' + API_KEY;
-  reqUrl = appendVariable(reqUrl, 'labels', label);
+  let reqUrl = url + '/get_address_by_label?api_key=' + API_KEY;
+  reqUrl = appendVariable(reqUrl, 'label', label);
   request.post(reqUrl, (err, res) => {
     callback(res.body);
   });
