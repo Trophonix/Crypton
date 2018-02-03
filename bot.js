@@ -39,7 +39,7 @@ bot.on('ready', () => {
 bot.on('guildCreate', guild => updatePresence());
 bot.on('guildDelete', guild => updatePresence());
 
-async function getMember(event) {
+const getMember = async (event) => {
   return new Promise(resolve => {
     if (event && event.guild) {
       event.guild.fetchMember(event.author).then(resolve);
@@ -56,21 +56,23 @@ bot.on('message', event => {
     let args = message.split(' ');
     let cmd = args[0];
     args.splice(0, 1);
-    let member = await getMember(event);
-    bot.commands.forEach(command => {
-      if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
-        console.log(
-          `[${event.guild.name} (${event.guild.id})] ${
-            event.author.username
-          }#${event.author.discriminator}: ${
-            config.prefix
-          }${cmd} ${args.join(' ')}`
-        );
-        if (member || command.allowDM) {
-          command.onCommand(event, member, event.channel, args);
+    (async () => {
+      bot.commands.forEach(command => {
+        if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
+          console.log(
+            `[${event.guild.name} (${event.guild.id})] ${
+              event.author.username
+            }#${event.author.discriminator}: ${
+              config.prefix
+            }${cmd} ${args.join(' ')}`
+          );
+          if (member || command.allowDM) {
+            command.onCommand(event, member, event.channel, args);
+          }
         }
-      }
-    });
+      });
+    })();
+    let member = await getMember(event);
   }
 });
 

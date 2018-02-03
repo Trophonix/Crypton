@@ -26,7 +26,7 @@ module.exports = (bot, config) => {
     usage: 'balance',
     description: 'View your balance',
     allowDM: true,
-    onCommand: (event, member, channel, args) => {
+    onCommand: async (event, member, channel, args) => {
       let wallet = await getWallet(event.author);
       if (wallet) {
         let embed = new RichEmbed()
