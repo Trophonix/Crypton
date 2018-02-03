@@ -14,7 +14,7 @@ module.exports = (bot, config) => {
           let embed = new RichEmbed()
             .setColor(config.colors.main)
             .setTitle('Your balance')
-            .addField('Balance', res.data.available_balance);
+            .addField('Balance', res.data.available_balance + ' Ð');
           let pending = res.data.pending_received_balance;
           if (pending && parseFloat(pending) > 0) {
             embed.addField('Pending balance', pending);
@@ -25,7 +25,7 @@ module.exports = (bot, config) => {
         } else {
           let embed = new RichEmbed()
             .setColor(config.colors.main)
-            .addField('Balance', '0.00000000')
+            .addField('Balance', '0.00000000 Ð')
             .addField('Add balance', `DM me ${config.prefix}help to see how to deposit to your balance. (WIP)`)
             .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
             .setTimestamp();
