@@ -2,18 +2,18 @@ const RichEmbed = require('discord.js').RichEmbed;
 const cache = require('../cache');
 
 module.exports = (bot, config) => {
-  const block_io = require('block_io');
-  const BlockIO = new block_io(config.block_io.API_KEY, config.block_io.SECRET, 2);
+  const block_io = require('../block_io');
+  const BlockIO = new block_io(config);
 
   function getWallet(user, callback) {
-    BlockIO.get_address_by_label({label: user.id}, res => {
+    BlockIO.getWalletBalance({label: user.id}, res => {
       console.log(res);
       if (res && res.status === 'success' && res.data) {
         callback(res.data);
       } else {
-        BlockIO.get_new_address({label: user.id}, _res => {
+        BlockIO.createWallet({label: user.id}, _res => {
           console.log(_res);
-          BlockIO.get_address_balance({label: user.id}, res1 => {
+          BlockIO.getWalletBalance({label: user.id}, res1 => {
             if (res1) callback(res1.data);
             else callback(null);
           });

@@ -29,6 +29,7 @@
     "discord.js": "^11.3.0",
     "express": "^4.16.2",
     "node-binance-api": "^0.3.9",
-    "node-bittrex-api": "^0.8.1"
+    "node-bittrex-api": "^0.8.1",
+    "request": "^2.83.0"
   }
 }
