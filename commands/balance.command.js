@@ -3,6 +3,7 @@ const cache = require('../cache');
 
 module.exports = (bot, config) => {
   var BlockIO = require('../block_io');
+  console.log(BlockIO);
 
   function getWallet(user, callback) {
     BlockIO.getWalletBalance({label: user.id}, res => {
