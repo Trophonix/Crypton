@@ -27,7 +27,7 @@ module.exports = (bot, config) => {
             .setColor(config.colors.main)
             .addField('Balance', '0.00000000')
             .addField('Add balance', `DM me ${config.prefix}help to see how to deposit to your balance. (WIP)`)
-            .setAuthor('Requested by ' + member.displayName, event.author.authorURL)
+            .setAuthor('Requested by ' + member.displayName, event.author.avatarURL)
             .setTimestamp();
           channel.send({embed}).catch(console.error);
         }
