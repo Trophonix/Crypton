@@ -52,6 +52,7 @@ methods.send = (from, to, amount, callback) => {
   reqUrl = appendVariable(reqUrl, 'amounts', amount);
   reqUrl = appendVariable(reqUrl, 'pin', SECRET);
   request.post(reqUrl, (err, res) => {
+    console.log(res);
     callback(res.body);
   });
 }
