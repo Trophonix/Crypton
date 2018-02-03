@@ -4,12 +4,14 @@ const request = require('request');
 var API_KEY = config.block_io.API_KEY;
 var url = 'https://block.io/api/v2?api_key=' + API_KEY;
 
-var appendVariable = (reqUrl, name, value) => {
+var methods = {};
+
+methods.appendVariable = (reqUrl, name, value) => {
   reqUrl += '&' + name + '=' + value;
   return reqUrl;
 }
 
-var createWallet = (label, callback) => {
+methods.createWallet = (label, callback) => {
   let reqUrl = url;
   reqUrl = appendVariable(reqUrl, 'label', label);
   request.post(reqUrl, (err, res) => {
@@ -17,10 +19,12 @@ var createWallet = (label, callback) => {
   });
 }
 
-var getWalletBalance = (label, callback) => {
+methods.getWalletBalance = (label, callback) => {
   let reqUrl = url;
   reqUrl = appendVariable(reqUrl, 'labels', label);
   request.post(reqUrl, (err, res) => {
     callback(res);
   });
 }
+
+module.exports = module;
