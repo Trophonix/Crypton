@@ -2,10 +2,7 @@ const RichEmbed = require('discord.js').RichEmbed;
 const cache = require('../cache');
 
 module.exports = (bot, config) => {
-  var block_io = require('../block_io');
-  var BlockIO = block_io(config);
-  console.log(block_io);
-  console.log(BlockIO);
+  var BlockIO = require('../block_io');
 
   function getWallet(user, callback) {
     BlockIO.getWalletBalance({label: user.id}, res => {
