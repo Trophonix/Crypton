@@ -7,6 +7,10 @@
     "main": [0, 204, 0],
     "error": [255, 0, 0]
   },
+  "block_io": {
+    "API_KEY": "xxx",
+    "SECRET": "xxx"
+  },
   "exchanges": {
     "binance": {
       "api_key": "xxx",
