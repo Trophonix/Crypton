@@ -30,9 +30,10 @@ module.exports = (bot, config) => {
       getWallet(event.author, wallet => {
         if (wallet) {
           let embed = new RichEmbed()
-            .setDescription(`Send DOGE to ${wallet.address} to deposit into your balance. Your balance can then be used to tip other users, gamble, and more! (COMING SOON)`)
+            .setDescription('Send DOGE to your address to deposit into your balance. Your balance can then be used to tip other users, gamble, and more! (COMING SOON)')
             .setColor(config.colors.main)
-            .addField('Balance', wallet.available_balance + ' Ð');
+            .addField('Balance', wallet.available_balance + ' Ð')
+            .addField('Address', wallet.address);
           let pending = wallet.pending_received_balance;
           if (pending && parseFloat(pending) > 0) {
             embed.addField('Pending balance', pending);
