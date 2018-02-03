@@ -43,7 +43,10 @@ module.exports = (bot, config) => {
       if (!amount || isNaN(amount)) {
         let embed = new RichEmbed()
           .setColor(config.colors.error)
-          .addField('Invalid amount!', `${args[1]} is not a valid amount to send.`)
+          .addField(
+            'Invalid amount!',
+            `${args[1]} is not a valid amount to send.`
+          )
           .setAuthor(
             'Requested by ' + member.displayName,
             event.author.avatarURL
@@ -61,13 +64,33 @@ module.exports = (bot, config) => {
                     let embed = new RichEmbed()
                       .setColor(config.colors.main)
                       .setTitle('Success!')
-                      .setDescription(`Successfully sent ${amount} Ð to ${user.toString()}`)
+                      .setDescription(
+                        `Successfully sent ${amount}Ð to ${user.toString()}`
+                      )
                       .setAuthor(
                         'Requested by ' + member.displayName,
                         event.author.avatarURL
                       )
                       .setTimestamp();
                     channel.send({ embed }).catch(console.error);
+                    let dmChannel = user.dmChannel;
+                    if (dmChannel) {
+                      let dmEmbed = new RichEmbed()
+                        .setColor(config.colors.main)
+                        .setTitle("You've got DOGE!")
+                        .setDescription(
+                          `${event.author.tag} sent you ${amount}Ð!`
+                        )
+                        .setTimestamp();
+                      dmChannel.send({ embed: dmEmbed }).catch(err => {
+                        channel.send(
+                          user.toString() +
+                            `${
+                              event.author.tag
+                            } sent you ${amount}Ð! Use $bal to see your balance.`
+                        ).catch(console.error);
+                      });
+                    }
                   } else {
                     throw new Error();
                   }
@@ -79,7 +102,10 @@ module.exports = (bot, config) => {
           } else {
             let embed = new RichEmbed()
               .setColor(config.colors.error)
-              .addField('Insufficient balance!', `You don't have ${amount} Ð in your $balance.`)
+              .addField(
+                'Insufficient balance!',
+                `You don't have ${amount}Ð in your $balance.`
+              )
               .setAuthor(
                 'Requested by ' + member.displayName,
                 event.author.avatarURL
