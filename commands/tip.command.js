@@ -59,6 +59,7 @@ module.exports = (bot, config) => {
             BlockIO.getWallet(user, receiverWallet => {
               if (receiverWallet) {
                 BlockIO.send(event.author.id, user.id, amount, res => {
+                  if (res) res = JSON.parse(res.replace(/\n/g, ''));
                   if (res && res.status === 'success') {
                     let embed = new RichEmbed()
                       .setColor(config.colors.main)
