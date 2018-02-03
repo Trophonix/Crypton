@@ -7,12 +7,13 @@ module.exports = (bot, config) => {
 
   function getWallet(user, callback) {
     BlockIO.get_address_balance({label: user.id}, res => {
-      if (res.status === 'success' && res.data) {
+      if (res && res.status === 'success' && res.data) {
         callback(res.data);
       } else {
-        BlockIO.get_new_address({label: user.id}, res => {
-          BlockIO.get_address_balance({label: user.id}, res => {
-            callback(res.data);
+        BlockIO.get_new_address({label: user.id}, _res => {
+          BlockIO.get_address_balance({label: user.id}, res1 => {
+            if (res1) callback(res1.data);
+            else callback(null);
           });
         });
       }
