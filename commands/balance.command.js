@@ -6,12 +6,11 @@ module.exports = (bot, config) => {
 
   function getWallet(user, callback) {
     BlockIO.getWalletBalance(user.id, res => {
-      console.log(res);
+      res = JSON.parse(res.replace(/\n/g, ''))
       if (res && res.status === 'success' && res.data) {
         callback(res.data);
       } else {
         BlockIO.createWallet(user.id, _res => {
-          console.log(_res);
           BlockIO.getWalletBalance(user.id, res1 => {
             if (res1) callback(res1.data);
             else callback(null);
