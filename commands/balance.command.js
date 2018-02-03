@@ -7,6 +7,7 @@ module.exports = (bot, config) => {
 
   function getWallet(user, callback) {
     BlockIO.get_address_balance({label: user.id}, res => {
+      console.log(res);
       if (res && res.data) {
         callback(res.data);
       } else {
