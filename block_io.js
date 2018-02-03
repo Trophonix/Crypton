@@ -6,7 +6,7 @@ var url = 'https://block.io/api/v2?api_key=' + API_KEY;
 
 var methods = {};
 
-methods.appendVariable = (reqUrl, name, value) => {
+var appendVariable = (reqUrl, name, value) => {
   reqUrl += '&' + name + '=' + value;
   return reqUrl;
 }
