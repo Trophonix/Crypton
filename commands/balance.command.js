@@ -6,12 +6,12 @@ module.exports = (bot, config) => {
   const BlockIO = new block_io(config.block_io.API_KEY, config.block_io.SECRET, 2);
 
   function getWallet(user, callback) {
-    BlockIO.get_address_balance({'label': user.id}, res => {
+    BlockIO.get_address_balance({'labels': user.id}, res => {
       console.log(res);
       if (res && res.status === 'success' && res.data) {
         callback(res.data);
       } else {
-        BlockIO.get_new_address({'label': user.id}, _res => {
+        BlockIO.get_new_address({'labels': user.id}, _res => {
           console.log(_res);
           BlockIO.get_address_balance({label: user.id}, res1 => {
             if (res1) callback(res1.data);
