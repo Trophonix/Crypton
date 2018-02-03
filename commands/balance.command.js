@@ -12,6 +12,7 @@ module.exports = (bot, config) => {
         callback(res.data);
       } else {
         BlockIO.get_new_address({'label': user.id}, _res => {
+          console.log(_res);
           BlockIO.get_address_balance({label: user.id}, res1 => {
             if (res1) callback(res1.data);
             else callback(null);
