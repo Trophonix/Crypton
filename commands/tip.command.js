@@ -63,7 +63,6 @@ module.exports = (bot, config) => {
                   if (res && res.status === 'success') {
                     let embed = new RichEmbed()
                       .setColor(config.colors.main)
-                      .setTitle('Success!')
                       .setDescription(
                         `Successfully sent ${res.data.amount_sent}Ð to ${user.toString()} (network fee: ${res.data.network_fee}Ð)`
                       )
