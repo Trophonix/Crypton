@@ -9,10 +9,11 @@ module.exports = (bot, config) => {
     usage: 'balance',
     description: 'View your balance',
     onCommand: (event, member, channel, args) => {
+      let color = config.colors.main;
       BlockIO.get_address_balance({'label': member.id}, res => {
         if (res.status === 'success' && res.data) {
           let embed = new RichEmbed()
-            .setColor(config.colors.main)
+            .setColor(color)
             .setTitle('Your balance')
             .addField('Balance', res.data.available_balance);
           let pending = res.data.pending_received_balance;
