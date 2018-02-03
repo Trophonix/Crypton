@@ -78,8 +78,6 @@ function getPrices() {
 getPrices();
 setInterval(getPrices, 60 * 1000);
 
-cache.BlockIO = require('block_io')(config.block_io.API_KEY, config.block_io.SECRET, 2);
-
 const Express = require('express');
 const site = Express();
 
