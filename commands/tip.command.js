@@ -22,9 +22,9 @@ module.exports = (bot, config) => {
         channel.send({ embed }).catch(console.error);
         return;
       }
-      let mentions = event.mentions.users;
+      let mentions = event.mentions.users.array();
       console.log(mentions);
-      let user = users[0];
+      let user = mentions[0];
       if (!user) {
         let embed = new RichEmbed()
           .setColor(config.colors.error)
