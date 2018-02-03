@@ -1,6 +1,7 @@
 const RichEmbed = require('discord.js').RichEmbed;
 const cache = require('../cache');
-const BlockIO = cache.BlockIO;
+
+console.log(cache.BlockIO);
 
 module.exports = (bot, config) => {
   return {
@@ -8,7 +9,7 @@ module.exports = (bot, config) => {
     usage: 'balance',
     description: 'View your balance',
     onCommand: (event, member, channel, args) => {
-      BlockIO.get_address_balance({'label': member.id}, res => {
+      cache.BlockIO.get_address_balance({'label': member.id}, res => {
         if (res.status === 'success' && res.data) {
           let embed = new RichEmbed()
             .setColor(config.colors.main)
