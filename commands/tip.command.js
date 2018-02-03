@@ -65,7 +65,7 @@ module.exports = (bot, config) => {
                       .setColor(config.colors.main)
                       .setTitle('Success!')
                       .setDescription(
-                        `Successfully sent ${amount}Ð to ${user.toString()}`
+                        `Successfully sent ${amount}Ð to ${user.toString()} (network fee: ${res.network_fee}Ð)`
                       )
                       .setAuthor(
                         'Requested by ' + member.displayName,
