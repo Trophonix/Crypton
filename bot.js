@@ -57,6 +57,7 @@ bot.on('message', event => {
     let cmd = args[0];
     args.splice(0, 1);
     (async () => {
+      let member = await getMember(event);
       bot.commands.forEach(command => {
         if (command.aliases.indexOf(cmd.toLowerCase()) !== -1) {
           console.log(
@@ -72,7 +73,6 @@ bot.on('message', event => {
         }
       });
     })();
-    let member = await getMember(event);
   }
 });
 
