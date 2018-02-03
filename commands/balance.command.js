@@ -9,12 +9,12 @@ module.exports = (bot, config) => {
     BlockIO.get_address_balance({labels: user.id}, res => {
       console.log(res);
       if (res && res.status === 'success' && res.data) {
-        callback(res.data);
+        callback(res.data.balances[0]);
       } else {
         BlockIO.get_new_address({label: user.id}, _res => {
           console.log(_res);
           BlockIO.get_address_balance({labels: user.id}, res1 => {
-            if (res1) callback(res1.data);
+            if (res1) callback(res1.data.balances[0]);
             else callback(null);
           });
         });
