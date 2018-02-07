@@ -27,7 +27,7 @@ function getPrices() {
         }
       });
       cache[data.symbol] = {
-        price: data.prevClosePrice,
+        price: data.weightedAvgPrice,
         volume: data.volume,
         high: data.highPrice,
         low: data.lowPrice,
