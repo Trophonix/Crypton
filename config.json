@@ -1,6 +1,6 @@
 {
   "port": 5000,
-  "invite_url": "http://crypton.fun/add",
+  "invite_url": "https://discordapp.com/oauth2/authorize?client_id=401249077657993246&scope=bot&permissions=224321",
   "prefix": "$",
   "token": "xxx",
   "colors": {
